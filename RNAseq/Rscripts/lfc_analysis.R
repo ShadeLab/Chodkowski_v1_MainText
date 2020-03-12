@@ -58,6 +58,9 @@ loaded via a namespace (and not attached):
 
 #############################Burkholderia##############################
 
+#Clear R environment
+remove(list = ls())
+
 library(DESeq2)
 lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/B-thailandensis_LIBRARIES.txt", sep="\t",header=TRUE)
 counts <- read.csv(file="RNAseq/diffGeneExp/initialFiles/B-thailandensis_raw_counts.txt",sep="\t",header=TRUE)
@@ -89,6 +92,9 @@ save.image("RNAseq/LFC/outputFiles/BthailandensisLFC.RData")
 
 #############################Chromobacterium##############################
 
+#Clear R environment
+remove(list = ls())
+
 library(DESeq2)
 lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cviolaceum_LIBRARIES.txt", sep="\t",header=TRUE)
 counts <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cviolaceum_raw_counts.txt",sep="\t",header=TRUE)
@@ -119,6 +125,9 @@ save.image("RNAseq/LFC/outputFiles/CviolaceumLFC.RData")
 
 
 #############################Pseudomonas##############################
+
+#Clear R environment
+remove(list = ls())
 
 library(DESeq2)
 lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/P-syringae_LIBRARIES.txt", sep="\t",header=TRUE)
