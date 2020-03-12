@@ -351,7 +351,7 @@ write.csv(BtFinalTransportGenesID,"RNAseq/diffGeneExp/outputFiles/BttransportLow
 library(DESeq2)
 lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cviolaceum_LIBRARIES.txt", sep="\t",header=TRUE)
 counts <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cviolaceum_raw_counts.txt",sep="\t",header=TRUE)
-mapping <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cv_diffExp_3mem.csv",header=TRUE,sep=",")
+mapping <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Cv_diffExp_all.csv",header=TRUE,sep=",")
 
 transPorters <- read.csv("RNAseq/diffGeneExp/initialFiles/Cviolaceum31532TransAAPTransporters.csv",header=TRUE,sep=",")
 
@@ -373,7 +373,7 @@ countsTransP45hFiltered <- countsTransP45h[countsTransP45h$mean>142.768,]
 CvtransportLowEThresh <- transPorters[which(transPorters$GeneID %in% countsTransP45hFiltered$GeneID),]
 write.csv(CvtransportLowEThresh,"RNAseq/diffGeneExp/outputFiles/CvtransportLowEThresh.csv")
 
-CvmonoDeseq <- readRDS("CvmonoDeseq.rds")
+CvmonoDeseq <- readRDS("RNAseq/diffGeneExp/outputFiles/CvmonoDeseq.rds")
 #obtain fdr values less than 0.01
 table(CvmonoDeseq$padj<0.01)
 CvmonoFDR <- CvmonoDeseq$padj<0.01
@@ -415,7 +415,7 @@ countsTransP45hFiltered <- countsTransP45h[countsTransP45h$mean>174.2475,]
 PstransportLowEThresh <- transPorters[which(transPorters$GeneID %in% countsTransP45hFiltered$GeneID),]
 write.csv(PstransportLowEThresh,"RNAseq/diffGeneExp/outputFiles/PstransportLowEThresh.csv")
 
-PsmonoDeseq <- readRDS("PsmonoDeseq.rds")
+PsmonoDeseq <- readRDS("RNAseq/diffGeneExp/outputFiles/PsmonoDeseq.rds")
 #obtain fdr values less than 0.01
 table(PsmonoDeseq$padj<0.01)
 PsmonoFDR <- PsmonoDeseq$padj<0.01
