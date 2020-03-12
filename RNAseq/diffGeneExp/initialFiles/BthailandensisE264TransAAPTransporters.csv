@@ -1,0 +1,670 @@
+GeneID,Type,Component,Substrate
+637837517,ABC,ABC,sugar (ribose)
+637838747,ABC,ABC,dipeptide/oligopeptide
+637838910,ABC,ABC,sugar (ribose)
+637838928,ABC,ABC,sugar (ribose)
+637840852,ABC,ABC,sugar (ribose)
+637841465,ABC,ABC,unknown substrate
+637842009,ABC,ABC,sugar (ribose)
+637842012,ABC,ABC,sugar (ribose)
+637842103,ABC,ABC,sugar (ribose)
+637842143,ABC,ABC,sugar (ribose)
+637842154,ABC,ABC,multidrug
+637842315,ABC,ABC,sugar (ribose)
+637839993,LIV-E,AzlC,branched-chain amino acid efflux (AzlC)
+637840334,LIV-E,AzlC,branched-chain amino acid efflux (AzlC)
+637841360,LIV-E,AzlC,branched-chain amino acid efflux (AzlC)
+637837368,ABC,binding,lipoprotein
+637837515,ABC,binding,rhamnose
+637837525,ABC,binding,phosphonates
+637837743,ABC,binding,daunorubicin
+637837750,ABC,binding,lipoprotein
+637837820,ABC,binding,lipid A
+637837896,ABC,binding,molybdate
+637837898,ABC,binding,mobybdenate
+637837947,ABC,binding,polyamine
+637838103,ABC,binding,glycine betaine
+637838104,ABC,binding,nitrate
+637838269,ABC,binding,glycine betaine
+637838272,ABC,binding,choline
+637838415,ABC,binding,dipeptide/glycine betaine
+637838462,ABC,binding,glycine betaine
+637838478,ABC,binding,polyamine
+637838498,ABC,binding,ribose
+637838594,ABC,binding,daunorubicin
+637838595,ABC,binding,daunorubicin
+637838697,ABC,binding,glycine betaine
+637838710,ABC,binding,phosphate
+637838748,ABC,binding,D-methionine
+637838849,ABC,binding,leucine/valine
+637838899,ABC,binding,leucine/valine
+637838911,ABC,binding,ribose
+637838929,ABC,binding,ribose
+637839028,ABC,binding,polyamine
+637839093,ABC,binding,lipoprotein
+637839125,ABC,binding,lipid A
+637839126,ABC,binding,lipid A
+637839136,ABC,binding,daunorubicin
+637839137,ABC,binding,daunorubicin
+637839140,ABC,binding,leucine/valine
+637839150,ABC,binding,choline
+637839155,ABC,binding,choline
+637839160,ABC,binding,glycine betaine
+637839250,ABC,binding,polyamine
+637839354,ABC,binding,polyamine
+637839355,ABC,binding,2-aminoethylphosphonate
+637839387,ABC,binding,methionine
+637839435,ABC,binding,methionine
+637839442,ABC,binding,iron-hydroxamate
+637839444,ABC,binding,phosphonate
+637839516,ABC,binding,glycine betaine
+637839517,ABC,binding,lipoprotein
+637839575,ABC,binding,heme
+637839636,ABC,binding,toluene tolerance
+637839645,ABC,binding,lipoprotein
+637839655,ABC,binding,phosphate
+637839709,ABC,binding,nitrate
+637839718,ABC,binding,daunorubicin
+637839719,ABC,binding,daunorubicin
+637839722,ABC,binding,urea
+637839896,ABC,binding,glycine betaine
+637839897,ABC,binding,dipeptide/glycine betaine
+637839998,ABC,binding,sulfate/thiosulfate
+637840021,ABC,binding,cobalt
+637840047,ABC,binding,sulfate
+637840112,ABC,binding,methionine
+637840115,ABC,binding,thiamine
+637840160,ABC,binding,daunorubicin
+637840245,ABC,binding,lipid A
+637840294,ABC,binding,nitrate
+637840362,ABC,binding,molybdate
+637840363,ABC,binding,zinc
+637840372,ABC,binding,polyamine
+637840460,ABC,binding,daunorubicin
+637840461,ABC,binding,phosphate
+637840509,ABC,binding,phosphonate
+637840513,ABC,binding,iron-hydroxamate
+637840560,ABC,binding,phosphate
+637840570,ABC,binding,glycine betaine
+637840611,ABC,binding,heme
+637840657,ABC,binding,lipid A
+637840726,ABC,binding,urea
+637840851,ABC,binding,ribose
+637840900,ABC,binding,phosphate
+637841007,ABC,binding,daunorubicin
+637841085,ABC,binding,daunorubicin
+637841086,ABC,binding,cobalamin
+637841146,ABC,binding,daunorubicin
+637841172,ABC,binding,sulfate
+637841173,ABC,binding,daunorubicin
+637841176,ABC,binding,urea
+637841218,ABC,binding,phosphate
+637841227,ABC,binding,polyamine
+637841319,ABC,binding,D-methionine
+637841321,ABC,binding,methionine
+637841430,ABC,binding,leucine/valine
+637841442,ABC,binding,phosphate
+637841557,ABC,binding,lipoprotein
+637841650,ABC,binding,glycine betaine
+637841679,ABC,binding,cobalt
+637841725,ABC,binding,glycine betaine
+637841800,ABC,binding,lipoprotein
+637841936,ABC,binding,phosphate
+637841938,ABC,binding,heme
+637841946,ABC,binding,polyamine
+637841992,ABC,binding,daunorubicin
+637841996,ABC,binding,daunorubicin
+637842008,ABC,binding,xylose
+637842011,ABC,binding,xylose
+637842047,ABC,binding,glycine betaine
+637842049,ABC,binding,glycine betaine
+637842090,ABC,binding,iron-hydroxamate
+637842093,ABC,binding,phosphonate
+637842104,ABC,binding,xylose
+637842109,ABC,binding,lipid A
+637842134,ABC,binding,nitrate
+637842144,ABC,binding,rhamnose
+637842146,ABC,binding,sulfate
+637842149,ABC,binding,sulfate/thiosulfate
+637842168,ABC,binding,nitrate
+637842313,ABC,binding,ribose
+637842320,ABC,binding,daunorubicin
+637842321,ABC,binding,daunorubicin
+637842438,ABC,binding,phosphate
+637842497,ABC,binding,2-aminoethylphosphonate
+637842502,ABC,binding,polyamine
+637842524,ABC,binding,2-aminoethylphosphonate
+637842526,ABC,binding,polyamine
+637842592,ABC,binding,heme
+637842664,ABC,binding,daunorubicin
+637842666,ABC,binding,toluene tolerance
+637842670,ABC,binding,glycine betaine
+637842684,ABC,binding,polyamine
+637842824,ABC,binding,leucine/valine
+637842889,ABC,binding,2-aminoethylphosphonate
+637842966,ABC,binding,leucine/valine
+637842987,ABC,binding,phosphate
+637842988,ABC,binding,sulfate
+637842990,ABC,binding,leucine/valine
+637842995,ABC,binding,urea
+637842996,ABC,binding,daunorubicin
+637842997,ABC,binding,daunorubicin
+637837392,ABC,binding protein,spermidine/putrescine
+637837528,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637837744,ABC,binding protein,unknown substrate
+637837948,ABC,binding protein,spermidine/putrescine
+637838416,ABC,binding protein,dipeptide/oligopeptide
+637838482,ABC,binding protein,sugar
+637838729,ABC,binding protein,dipeptide/oligopeptide
+637838744,ABC,binding protein,dipeptide/oligopeptide
+637838771,ABC,binding protein,nitrate/sulfonate/taurine
+637838956,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637839026,ABC,binding protein,iron(III)
+637839249,ABC,binding protein,spermidine/putrescine
+637839432,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637839520,ABC,binding protein,oligopeptide
+637839657,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637839708,ABC,binding protein,nitrate/sulfonate/taurine
+637839893,ABC,binding protein,dipeptide/oligopeptide
+637840022,ABC,binding protein,dipeptide/oligopeptide
+637840048,ABC,binding protein,toluene tolerance
+637840049,ABC,binding protein,toluene tolerance
+637840113,ABC,binding protein,unknown substrate
+637840368,ABC,binding protein,sugar
+637840563,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637840897,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637841082,ABC,binding protein,molybdate
+637841220,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637841224,ABC,binding protein,sugar
+637841452,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637841647,ABC,binding protein,oligopeptide
+637841945,ABC,binding protein,spermidine/putrescine
+637842119,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637842181,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637842441,ABC,binding protein,phosphate
+637842616,ABC,binding protein,unknown substrate
+637842668,ABC,binding protein,toluene tolerance
+637842687,ABC,binding protein,sugar
+637842960,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637842971,ABC,binding protein,amino acid (glutamine/glutamate/aspartate)
+637839319,DMT,DME,drug/metabolite
+637838209,GPTS,EnzymeI,unknown substrate
+637840086,GPTS,EnzymeI,unknown substrate
+637840122,GPTS,EnzymeI,unknown substrate
+637840084,SSPTS,EnzymeIIA,mannose/fructose
+637840157,SSPTS,EnzymeIIA,fructose
+637840123,SSPTS,EnzymeIIABC,glucose/maltose/N-acetylglucosamine
+637838211,SSPTS,EnzymeIIBC,fructose
+637837364,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637838589,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637839406,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637839633,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637840354,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637841619,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637841957,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637842113,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637842535,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637842536,RND,HAE1,multidrug/solvent efflux (HAE1 subfamily)
+637839650,RND,HAE3,multidrug/solvent efflux (HAE3 subfamily)
+637838487,RND,HME,cobalt/zinc/cadmium ion efflux (HME subfamily)
+637838677,RND,HME,cobalt/zinc/cadmium ion efflux (HME subfamily)
+637840085,GPTS,HPr,unknown substrate
+637841355,MOP,MATE,multidrug efflux
+637841880,MOP,MATE,multidrug efflux
+637842423,MOP,MATE,multidrug efflux
+637837369,ABC,membrane,lipoprotein releasing
+637837390,ABC,membrane,spermidine/putrescine
+637837391,ABC,membrane,spermidine/putrescine
+637837516,ABC,membrane,ribose
+637837742,ABC,membrane,multidrug
+637837749,ABC,membrane,lipoprotein releasing
+637837897,ABC,membrane,molybdate
+637837949,ABC,membrane,spermidine/putrescine
+637837950,ABC,membrane,spermidine/putrescine
+637838105,ABC,membrane,nitrate/sulfonate/taurine
+637838270,ABC,membrane,glycine betaine/L-proline
+637838417,ABC,membrane,dipeptide/oligopeptide
+637838418,ABC,membrane,dipeptide/oligopeptide
+637838441,ABC,membrane,toxin secretion
+637838480,ABC,membrane,sugar
+637838481,ABC,membrane,sugar
+637838596,ABC,membrane,multidrug
+637838597,ABC,membrane,multidrug
+637838711,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637838712,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637838745,ABC,membrane,dipeptide/oligopeptide
+637838746,ABC,membrane,dipeptide/oligopeptide
+637838909,ABC,membrane,sugar (ribose)
+637838927,ABC,membrane,sugar (ribose)
+637839027,ABC,membrane,iron(III)
+637839138,ABC,membrane,branched-chain amino acid
+637839139,ABC,membrane,branched-chain amino acid
+637839251,ABC,membrane,spermidine/putrescine
+637839252,ABC,membrane,spermidine/putrescine
+637839352,ABC,membrane,spermidine/putrescine
+637839353,ABC,membrane,sulfate
+637839443,ABC,membrane,cobalamin/Fe3+-siderophores
+637839518,ABC,membrane,dipeptide/oligopeptide
+637839519,ABC,membrane,dipeptide/oligopeptide
+637839644,ABC,membrane,lipoprotein releasing
+637839656,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637839710,ABC,membrane,nitrate/sulfonate/taurine
+637839720,ABC,membrane,branched-chain amino acid
+637839721,ABC,membrane,branched-chain amino acid
+637839894,ABC,membrane,dipeptide/oligopeptide
+637839895,ABC,membrane,dipeptide/oligopeptide
+637840046,ABC,membrane,toluene tolerance
+637840114,ABC,membrane,unknown substrate
+637840295,ABC,membrane,nitrate/sulfonate/taurine
+637840361,ABC,membrane,manganese/zinc ion
+637840369,ABC,membrane,sugar
+637840370,ABC,membrane,sugar
+637840458,ABC,membrane,branched-chain amino acid
+637840459,ABC,membrane,branched-chain amino acid
+637840508,ABC,membrane,cobalamin/Fe3+-siderophores
+637840561,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637840562,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637840569,ABC,membrane,nitrate/sulfonate/taurine
+637840701,ABC,membrane,unknown substrate
+637840853,ABC,membrane,sugar (ribose)
+637840898,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637840899,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637841008,ABC,membrane,polysaccharide export
+637841087,ABC,membrane,cobalamin/Fe3+-siderophores
+637841145,ABC,membrane,polysaccharide export
+637841174,ABC,membrane,branched-chain amino acid
+637841175,ABC,membrane,branched-chain amino acid
+637841225,ABC,membrane,sugar
+637841226,ABC,membrane,sugar
+637841320,ABC,membrane,D-methionine
+637841425,ABC,membrane,multidrug
+637841440,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637841441,ABC,membrane,amino acid (lysine/arginine/ornithine/histidine/octopine)
+637841464,ABC,membrane,unknown substrate
+637841466,ABC,membrane,unknown substrate
+637841556,ABC,membrane,lipoprotein releasing
+637841648,ABC,membrane,dipeptide/oligopeptide
+637841649,ABC,membrane,dipeptide/oligopeptide
+637841935,ABC,membrane,unknown substrate
+637841947,ABC,membrane,spermidine/putrescine
+637841948,ABC,membrane,spermidine/putrescine
+637841991,ABC,membrane,multidrug
+637841997,ABC,membrane,multidrug
+637842010,ABC,membrane,sugar (xylose)
+637842013,ABC,membrane,sugar (ribose)
+637842014,ABC,membrane,sugar (ribose)
+637842048,ABC,membrane,glycine betaine/L-proline/carnitine/choline
+637842050,ABC,membrane,glycine betaine/L-proline/carnitine/choline
+637842088,ABC,membrane,pyoverdin (siderophore) exporter PvdE
+637842092,ABC,membrane,cobalamin/Fe3+-siderophores
+637842102,ABC,membrane,sugar (ribose)
+637842117,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637842118,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637842132,ABC,membrane,nitrate/sulfonate/taurine
+637842142,ABC,membrane,sugar (ribose)
+637842147,ABC,membrane,sulfate
+637842148,ABC,membrane,sulfate
+637842155,ABC,membrane,multidrug
+637842169,ABC,membrane,nitrate/sulfonate/taurine
+637842182,ABC,membrane,amino aicd (glutamine/glutamate/aspartate)
+637842314,ABC,membrane,sugar (ribose)
+637842322,ABC,membrane,branched-chain amino acid
+637842439,ABC,membrane,phosphate
+637842440,ABC,membrane,phosphate
+637842498,ABC,membrane,sulfate
+637842501,ABC,membrane,spermidine/putrescine
+637842525,ABC,membrane,iron(III)
+637842617,ABC,membrane,toxin secretion
+637842663,ABC,membrane,polysaccharide export
+637842669,ABC,membrane,toluene tolerance
+637842675,ABC,membrane,multidrug
+637842685,ABC,membrane,sugar
+637842686,ABC,membrane,sugar
+637842700,ABC,membrane,heme export
+637842989,ABC,membrane,branched-chain amino acid
+637842993,ABC,membrane,branched-chain amino acid
+637842994,ABC,membrane,branched-chain amino acid
+637841219,AGCS,membrane,amino aicd (glutamine/glutamate/aspartate)
+637840409,MOP,MVF,virulence factor MviN
+637837999,MOP,PST,polysaccharide export
+637840193,MOP,PST,polysaccharide export
+637841160,MOP,PST,polysaccharide export
+637839983,DMT,RarD,chloramphenicol (RarD homolog)
+637840948,RND,SecDF,protein export (SecDF)
+637840699,DMT,SMR,multidrug efflux (SMR)
+637842174,DMT,SMR,multidrug efflux (SMR)
+637838261,ACR3,Unknown,arsenite
+637839401,AEC,Unknown,unknown substrate
+637842678,AGCS,Unknown,sodium ion:alanine symporter
+637837834,AI-2E,Unknown,Autoinducer-2 export
+637838997,AI-2E,Unknown,Autoinducer-2 export
+637840170,AI-2E,Unknown,Autoinducer-2 export
+637840081,Amt,Unknown,ammonium
+637837769,APC,Unknown,amino acid
+637838432,APC,Unknown,amino acid
+637838602,APC,Unknown,arginine:ornithine antiporter
+637838836,APC,Unknown,amino acid
+637838861,APC,Unknown,GABA
+637838895,APC,Unknown,GABA
+637838952,APC,Unknown,amino acid
+637839159,APC,Unknown,amino acid
+637839370,APC,Unknown,amino acid
+637839584,APC,Unknown,GABA
+637839881,APC,Unknown,amino acid
+637840437,APC,Unknown,GABA
+637842052,APC,Unknown,arginine:ornithine antiporter
+637842522,APC,Unknown,amino acid
+637842589,APC,Unknown,GABA
+637842603,APC,Unknown,amino acid
+637842795,APC,Unknown,GABA
+637842949,APC,Unknown,ethanolamine
+637837416,ArAE,Unknown,fusaric acid efflux
+637837771,ArAE,Unknown,fusaric acid efflux
+637838948,ArAE,Unknown,fusaric acid efflux
+637839214,ArAE,Unknown,fusaric acid efflux
+637840665,ArAE,Unknown,fusaric acid efflux
+637842295,ArAE,Unknown,fusaric acid efflux
+637842521,ArAE,Unknown,fusaric acid efflux
+637841368,ArsB,Unknown,arsenite (ArsB)
+637842982,ArsB,Unknown,arsenite (ArsB)
+637839975,BASS,Unknown,sodium ion/
+637838412,BCCT,Unknown,glycine betaine/carnitine/choline
+637840635,BenE,Unknown,benzoate
+637838725,Bestrophin,Unknown,Bestrophin anion channel
+637838695,CaCA,Unknown,proton:calcium ion antiporter
+637837375,CDF,Unknown,cation efflux
+637837695,CDF,Unknown,cation efflux
+637842820,CDF,Unknown,cation efflux
+637837379,CHR,Unknown,chromate ion
+637839927,CHR,Unknown,chromate ion
+637839928,CHR,Unknown,chromate ion
+637840419,CHR,Unknown,chromate ion
+637840619,CHR,Unknown,chromate ion
+637837813,ClC,Unknown,chloride ion channel
+637838699,ClC,Unknown,chloride ion channel
+637841243,ClC,Unknown,chloride ion channel
+637841960,ClC,Unknown,chloride ion channel
+637837714,CNT,Unknown,sodium ion:nucleoside symporter
+637837801,CPA1,Unknown,sodium ion:proton antiporter
+637840002,CPA1,Unknown,sodium ion:proton antiporter
+637838496,CPA2,Unknown,potassium/sodium ion:proton antiporter
+637838531,CPA2,Unknown,potassium/sodium ion:proton antiporter
+637839675,CPA2,Unknown,potassium/sodium ion:proton antiporter
+637840165,CPA2,Unknown,potassium/sodium ion:proton antiporter
+637842001,CPA2,Unknown,potassium/sodium ion:proton antiporter
+637839404,DAACS,Unknown,proton/sodium ion:glutamate/aspartate symporter
+637840072,DAACS,Unknown,proton/sodium ion:glutamate/aspartate symporter
+637840875,DAACS,Unknown,proton/sodium ion:glutamate/aspartate symporter
+637842162,DAACS,Unknown,proton/sodium ion:glutamate/aspartate symporter
+637837891,DMT,Unknown,drug/metabolite
+637838190,DMT,Unknown,drug/metabolite
+637838448,DMT,Unknown,drug/metabolite
+637839418,DMT,Unknown,drug/metabolite
+637839540,DMT,Unknown,drug/metabolite
+637839853,DMT,Unknown,drug/metabolite
+637840252,DMT,Unknown,drug/metabolite
+637840394,DMT,Unknown,drug/metabolite
+637840624,DMT,Unknown,drug/metabolite
+637840641,DMT,Unknown,drug/metabolite
+637841040,DMT,Unknown,drug/metabolite
+637841078,DMT,Unknown,drug/metabolite
+637841687,DMT,Unknown,drug/metabolite
+637841721,DMT,Unknown,drug/metabolite
+637841863,DMT,Unknown,drug/metabolite
+637842041,DMT,Unknown,drug/metabolite
+637842460,DMT,Unknown,drug/metabolite
+637842506,DMT,Unknown,drug/metabolite
+637842515,DMT,Unknown,drug/metabolite
+637841559,DNA-T,Unknown,unknown substrate
+637837724,F-ATPase,Unknown,protons
+637837728,F-ATPase,Unknown,protons
+637837729,F-ATPase,Unknown,protons
+637837730,F-ATPase,Unknown,protons
+637837731,F-ATPase,Unknown,protons
+637840104,F-ATPase,Unknown,protons
+637842973,F-ATPase,Unknown,protons
+637842974,F-ATPase,Unknown,protons
+637842975,F-ATPase,Unknown,protons
+637842976,F-ATPase,Unknown,protons
+637842977,F-ATPase,Unknown,protons
+637842978,F-ATPase,Unknown,protons
+637842979,F-ATPase,Unknown,protons
+637842980,F-ATPase,Unknown,protons
+637842981,F-ATPase,Unknown,protons
+637840891,GntP,Unknown,gluconate
+637837889,HCC,Unknown,hemolysin C (HlyC) homolog
+637840809,HCC,Unknown,heavy metal ion
+637837469,IIISP,Unknown,unknown substrate
+637837470,IIISP,Unknown,unknown substrate
+637837471,IIISP,Unknown,unknown substrate
+637837473,IIISP,Unknown,unknown substrate
+637837477,IIISP,Unknown,unknown substrate
+637838045,IIISP,Unknown,unknown substrate
+637838050,IIISP,Unknown,unknown substrate
+637838053,IIISP,Unknown,unknown substrate
+637838054,IIISP,Unknown,unknown substrate
+637838057,IIISP,Unknown,unknown substrate
+637838058,IIISP,Unknown,unknown substrate
+637838126,IIISP,Unknown,unknown substrate
+637838133,IIISP,Unknown,unknown substrate
+637838139,IIISP,Unknown,unknown substrate
+637838140,IIISP,Unknown,unknown substrate
+637838141,IIISP,Unknown,unknown substrate
+637838142,IIISP,Unknown,unknown substrate
+637839703,IIISP,Unknown,unknown substrate
+637839704,IIISP,Unknown,unknown substrate
+637839705,IIISP,Unknown,unknown substrate
+637839873,IIISP,Unknown,unknown substrate
+637842835,IIISP,Unknown,unknown substrate
+637842836,IIISP,Unknown,unknown substrate
+637838071,IISP,Unknown,signal recognition particle receptor alpha subunit (SR-alpha)
+637839334,ILT,Unknown,iron ion
+637840000,IRK-C,Unknown,ATP-sensitive inward rectifier potassium ion channel
+637842208,IVSP,Unknown,unknown substrate
+637841916,KUP,Unknown,potassium ion uptake
+637839361,LctP,Unknown,L-lactate
+637839378,LctP,Unknown,L-lactate
+637837339,LysE,Unknown,lysine efflux
+637837357,MFS,Unknown,metabolite (benzoate)
+637837506,MFS,Unknown,4-hydroxyphenylacetate
+637837522,MFS,Unknown,multidrug efflux
+637837547,MFS,Unknown,multidrug efflux
+637837600,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637837637,MFS,Unknown,glycerol-3-phosphate
+637837643,MFS,Unknown,multidrug efflux
+637837658,MFS,Unknown,D-galactonate
+637837831,MFS,Unknown,multidrug efflux
+637838029,MFS,Unknown,metabolite (benzoate)
+637838038,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637838118,MFS,Unknown,multidrug efflux
+637838213,MFS,Unknown,metabolite (benzoate)
+637838277,MFS,Unknown,D-galactonate
+637838313,MFS,Unknown,metabolite (benzoate)
+637838373,MFS,Unknown,metabolite (benzoate)
+637838380,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637838398,MFS,Unknown,metabolite (benzoate)
+637838400,MFS,Unknown,D-galactonate
+637838465,MFS,Unknown,sugar
+637838472,MFS,Unknown,nitrate
+637838484,MFS,Unknown,multidrug efflux
+637838523,MFS,Unknown,multidrug efflux
+637838543,MFS,Unknown,multidrug efflux
+637838556,MFS,Unknown,nitrate
+637838580,MFS,Unknown,multidrug efflux
+637838705,MFS,Unknown,multidrug efflux
+637838767,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637838792,MFS,Unknown,metabolite (benzoate)
+637838864,MFS,Unknown,multidrug efflux
+637839054,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637839122,MFS,Unknown,Acetyl-CoA:CoA antiporter
+637839180,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637839216,MFS,Unknown,multidrug efflux
+637839357,MFS,Unknown,D-galactonate
+637839373,MFS,Unknown,nitrate/nitrite
+637839374,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637839430,MFS,Unknown,multidrug efflux
+637839455,MFS,Unknown,multidrug efflux
+637839480,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637839531,MFS,Unknown,multidrug efflux
+637839532,MFS,Unknown,metabolite (benzoate)
+637839587,MFS,Unknown,D-galactonate
+637839597,MFS,Unknown,multidrug efflux
+637839695,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637839828,MFS,Unknown,Acetyl-CoA:CoA antiporter
+637839854,MFS,Unknown,multidrug efflux
+637839860,MFS,Unknown,D-galactonate
+637839892,MFS,Unknown,multidrug efflux
+637840172,MFS,Unknown,multidrug efflux
+637840214,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637840266,MFS,Unknown,multidrug efflux
+637840313,MFS,Unknown,multidrug efflux
+637840381,MFS,Unknown,metabolite (benzoate)
+637840425,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637840548,MFS,Unknown,4-hydroxyphenylacetate
+637840553,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637840576,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637840666,MFS,Unknown,multidrug efflux
+637840672,MFS,Unknown,multidrug efflux
+637840673,MFS,Unknown,multidrug efflux
+637840705,MFS,Unknown,multidrug efflux
+637840869,MFS,Unknown,multidrug efflux
+637840894,MFS,Unknown,nitrate
+637840946,MFS,Unknown,multidrug efflux
+637841068,MFS,Unknown,metabolite (benzoate)
+637841071,MFS,Unknown,multidrug efflux
+637841072,MFS,Unknown,multidrug efflux
+637841079,MFS,Unknown,multidrug efflux
+637841096,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637841217,MFS,Unknown,multidrug efflux
+637841246,MFS,Unknown,multidrug efflux
+637841288,MFS,Unknown,multidrug efflux
+637841504,MFS,Unknown,multidrug efflux
+637841524,MFS,Unknown,nitrate
+637841525,MFS,Unknown,nitrate
+637841623,MFS,Unknown,multidrug efflux
+637841675,MFS,Unknown,multidrug efflux
+637841728,MFS,Unknown,multidrug efflux
+637841781,MFS,Unknown,multidrug efflux
+637841884,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637841966,MFS,Unknown,D-galactonate
+637842061,MFS,Unknown,cyanate
+637842135,MFS,Unknown,multidrug efflux
+637842196,MFS,Unknown,multidrug efflux
+637842230,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637842284,MFS,Unknown,multidrug efflux
+637842299,MFS,Unknown,multidrug efflux
+637842328,MFS,Unknown,multidrug efflux
+637842353,MFS,Unknown,metabolite (benzoate)
+637842383,MFS,Unknown,multidrug efflux
+637842454,MFS,Unknown,multidrug efflux
+637842461,MFS,Unknown,multidrug efflux
+637842505,MFS,Unknown,multidrug efflux
+637842607,MFS,Unknown,multidrug efflux
+637842786,MFS,Unknown,multidrug efflux
+637842823,MFS,Unknown,multidrug efflux
+637842912,MFS,Unknown,multidrug efflux (EmrB/QacA subfamily)
+637840271,MIP,Unknown,glycerol uptake
+637842856,MIP,Unknown,glycerol uptake
+637841980,MIT,Unknown,magnesium/cobalt ion
+637839281,MOP,Unknown,multidrug efflux
+637841027,MOP,Unknown,multidrug efflux
+637837459,Mot/Exb,Unknown,unknown substrate
+637839326,Mot/Exb,Unknown,unknown substrate
+637839327,Mot/Exb,Unknown,unknown substrate
+637839814,Mot/Exb,Unknown,unknown substrate
+637840881,Mot/Exb,Unknown,unknown substrate
+637840882,Mot/Exb,Unknown,unknown substrate
+637841047,Mot/Exb,Unknown,unknown substrate
+637841048,Mot/Exb,Unknown,unknown substrate
+637842851,Mot/Exb,Unknown,unknown substrate
+637841748,MscL,Unknown,large-conductance mechanosensitive ion channel
+637840447,MscS,Unknown,small-conductance mechanosensitive ion channel
+637840994,MscS,Unknown,small-conductance mechanosensitive ion channel
+637841829,MscS,Unknown,small-conductance mechanosensitive ion channel
+637841985,MscS,Unknown,small-conductance mechanosensitive ion channel
+637842472,MSS,Unknown,sodium ion:malonate symporter
+637842473,MSS,Unknown,sodium ion:malonate symporter
+637839682,MTB,Unknown,unknown substrate
+637839684,MTB,Unknown,unknown substrate
+637840806,MTB,Unknown,unknown substrate
+637840807,MTB,Unknown,unknown substrate
+637837933,NCS1,Unknown,cytosine/purines/uracil/thiamine/allantoin
+637838942,NCS1,Unknown,cytosine/purines/uracil/thiamine/allantoin
+637841734,NCS1,Unknown,cytosine/purines/uracil/thiamine/allantoin
+637839115,NCS2,Unknown,xanthine/uracil
+637839925,NCS2,Unknown,xanthine/uracil
+637840356,NCS2,Unknown,xanthine/uracil
+637840679,NCS2,Unknown,xanthine/uracil
+637841281,NCS2,Unknown,xanthine/uracil
+637842078,NiCoT,Unknown,nickel ion
+637838727,Nramp,Unknown,manganese/iron ion
+637839942,Nramp,Unknown,manganese/iron ion
+637841944,Nramp,Unknown,manganese/iron ion
+637842356,Nramp,Unknown,manganese/iron ion
+637838384,OMF,Unknown,unknown substrate
+637839176,OMF,Unknown,unknown substrate
+637837432,OOP,Unknown,unknown substrate
+637837460,OOP,Unknown,unknown substrate
+637837559,OOP,Unknown,unknown substrate
+637838451,OOP,Unknown,unknown substrate
+637839187,OOP,Unknown,unknown substrate
+637840099,OOP,Unknown,unknown substrate
+637842850,OOP,Unknown,unknown substrate
+637842523,OPT,Unknown,oligopeptide
+637842901,Oxa1,Unknown,60 KD inner membrane protein OxaA homolog
+637837313,P-ATPase,Unknown,potassium ion
+637838611,P-ATPase,Unknown,calcium ion/manganese ion
+637838613,P-ATPase,Unknown,plasma proton
+637838720,P-ATPase,Unknown,magnesium ion
+637838922,P-ATPase,Unknown,zinc/cadmium/cobalt ion
+637839077,P-ATPase,Unknown,calcium ion
+637839469,P-ATPase,Unknown,zinc/cadmium/cobalt ion
+637839956,P-ATPase,Unknown,zinc/cadmium/cobalt ion
+637840693,P-ATPase,Unknown,potassium ion
+637840694,P-ATPase,Unknown,potassium ion
+637840695,P-ATPase,Unknown,potassium ion
+637842956,P-ATPase,Unknown,zinc/cadmium/cobalt ion
+637838110,PiT,Unknown,phosphate
+637841854,PiT,Unknown,phosphate
+637839522,POT,Unknown,proton:dipeptide/tripeptide symporter
+637837359,RhtB,Unknown,amino acid efflux
+637837877,RhtB,Unknown,amino acid efflux
+637837882,RhtB,Unknown,amino acid efflux
+637838113,RhtB,Unknown,amino acid efflux
+637838827,RhtB,Unknown,amino acid efflux
+637838991,RhtB,Unknown,amino acid efflux
+637839803,RhtB,Unknown,amino acid efflux
+637839885,RhtB,Unknown,amino acid efflux
+637840167,RhtB,Unknown,amino acid efflux
+637841098,RhtB,Unknown,amino acid efflux
+637841197,RhtB,Unknown,amino acid efflux
+637842450,RhtB,Unknown,amino acid efflux
+637842656,RhtB,Unknown,neutral amino acid/multiple antibiotic resistance
+637842787,RhtB,Unknown,amino acid efflux
+637842867,RhtB,Unknown,amino acid efflux
+637839316,SSS,Unknown,sodium ion:proline symporter
+637839807,SSS,Unknown,sodium ion:proline symporter
+637840071,SSS,Unknown,sodium ion:proline symporter
+637840073,SSS,Unknown,sodium ion:proline symporter
+637840287,SSS,Unknown,sodium ion:proline symporter
+637840632,SSS,Unknown,sodium ion:proline symporter
+637841532,SSS,Unknown,sodium ion:proline symporter
+637842305,SSS,Unknown,sodium ion:proline symporter
+637842435,SSS,Unknown,sodium ion:proline symporter
+637839616,SulP,Unknown,sulfate
+637840723,SulP,Unknown,sulfate
+637842193,SulP,Unknown,sulfate
+637842646,Tat,Unknown,protein export
+637842647,Tat,Unknown,protein export
+637842648,Tat,Unknown,protein export
+637838917,TDT,Unknown,tellurite
+637837619,TerC,Unknown,tellurium ion efflux
+637840321,TerC,Unknown,tellurium ion efflux
+637838287,TRAP-T,Unknown,C4-dicarboxylate
+637838288,TRAP-T,Unknown,C4-dicarboxylate
+637840483,TRAP-T,Unknown,C4-dicarboxylate
+637840484,TRAP-T,Unknown,C4-dicarboxylate
+637839445,TRIC,Unknown,unknown substrate
+637841229,TRIC,Unknown,unknown substrate
+637838762,VIC,Unknown,potassium ion channel
+637841194,YggT,Unknown,unknown substrate
