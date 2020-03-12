@@ -1,0 +1,2 @@
+inchikey2D	inchi	molecularFormula	rank	score	name	smiles	xlogp	pubchemids	links
+HOKPQMFBATYANX	InChI=1S/C8H14O14P4/c9-7(23(11,12)13,24(14,15)16)5-1-2-6(4-3-5)8(10,25(17,18)19)26(20,21)22/h1-4,9-10H,(H2,11,12,13)(H2,14,15,16)(H2,17,18,19)(H2,20,21,22)	C8H14O14P4	1	-223.74196990162616	""	C1=C(C=CC(=C1)C(O)(P(=O)(O)O)P(=O)(O)O)C(O)(P(=O)(O)O)P(=O)(O)O	-7.55999994	""	PubChem:(15530880)

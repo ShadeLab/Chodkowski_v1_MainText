@@ -1,0 +1,2 @@
+inchikey2D	inchi	molecularFormula	rank	score	name	smiles	xlogp	pubchemids	links
+ZJJPCLLXCMIXIN	InChI=1S/C4H7N2O12P3/c7-3-1-2-6(4(8)5-3)16-20(12,13)18-21(14,15)17-19(9,10)11/h1-2H,(H,12,13)(H,14,15)(H,5,7,8)(H2,9,10,11)	C4H7N2O12P3	1	-228.7236973296636	""	C1=CN(C(=O)N=C1O)OP(=O)(O)OP(=O)(O)OP(=O)(O)O	-4.69500017	""	PubChem:(57003513 57474120);biological
