@@ -1,0 +1,2 @@
+inchikey2D	inchi	molecularFormula	rank	score	name	smiles	xlogp	pubchemids	links
+BZCRKGPKFOESHZ	InChI=1S/C7H11NO3P2/c8-6-3-1-5(2-4-6)7(12)13(9,10)11/h1-4,7H,8,12H2,(H2,9,10,11)	C7H11NO3P2	1	-3085.9071821334437	[(4-aminophenyl)-phosphanylmethyl]phosphonic acid	C1=C(C=CC(=C1)N)C(P)P(=O)(O)O	-0.859000027	""	PubChem:(59906482)

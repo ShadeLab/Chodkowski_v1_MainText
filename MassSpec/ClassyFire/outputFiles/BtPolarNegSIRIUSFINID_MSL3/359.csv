@@ -1,0 +1,2 @@
+inchikey2D	inchi	molecularFormula	rank	score	name	smiles	xlogp	pubchemids	links
+TUNQYUUBAPZMFB	InChI=1S/C7H10N4O14/c1-20-7-6(25-11(18)19)5(24-10(16)17)4(23-9(14)15)3(22-7)2-21-8(12)13/h3-7H,2H2,1H3	C7H10N4O14	1	-3137.778869508295	alpha-Methylglucoside tetranitrate	COC1C(C(C(C(CON(=O)=O)O1)ON(=O)=O)ON(=O)=O)ON(=O)=O	0.913999975	""	PubChem:(61588 518735 23279476 23279477 23279478)
