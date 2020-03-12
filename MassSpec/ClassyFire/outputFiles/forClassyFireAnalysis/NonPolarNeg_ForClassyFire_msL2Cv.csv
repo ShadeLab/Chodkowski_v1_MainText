@@ -1,0 +1,4 @@
+"","ID","Label","Database","InChI"
+"5",2243,"Gallic acid ","mona","InChI=1S/C7H6O5/c8-4-1-3(7(11)12)2-5(9)6(4)10/h1-2,8-10H,(H,11,12)"
+"7",70,"PYROCATECHUIC ACID ","mona","InChI=1S/C7H6O4/c8-5-3-1-2-4(6(5)9)7(10)11/h1-3,8-9H,(H,10,11)"
+"15",480,"N-Acetyl-L-tyrosine","nist17","InChI=1S/C11H13NO4/c1-7(13)12-10(11(15)16)6-8-2-4-9(14)5-3-8/h2-5,10,14H,6H2,1H3,(H,12,13)(H,15,16)/t10-/m0/s1"
