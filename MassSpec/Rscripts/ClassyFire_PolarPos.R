@@ -9,9 +9,9 @@ PsFinalIDsPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalID
 MSMSdat <- read.csv("MassSpec/releaseAnalysis/MSMS/initialFiles/MZmine_PolarPosMSMS_peakArea.csv",check.names=F)
 
 #They match! Filtered features with MSMS data
-BtMSMS <- BtFinalIDsPolarPos[which(BtFinalIDsPolarPos %in% MSMSdat$"row ID")] #443/2445 filtered features
+BtMSMS <- BtFinalIDsPolarPos[which(BtFinalIDsPolarPos %in% MSMSdat$"row ID")] #443/2446 filtered features
 CvMSMS <- CvFinalIDsPolarPos[which(CvFinalIDsPolarPos %in% MSMSdat$"row ID")] #366/1692 filtered features
-PsMSMS <- PsFinalIDsPolarPos[which(PsFinalIDsPolarPos %in% MSMSdat$"row ID")] #336/1917 filtered features
+PsMSMS <- PsFinalIDsPolarPos[which(PsFinalIDsPolarPos %in% MSMSdat$"row ID")] #335/1917 filtered features
 
 #Read in the final table of IDed metabolites. This has been manually manipulated to remove any additional redundancies between MSL1 data MSL2
 finalMetabolitePP <- read.csv("MassSpec/releaseAnalysis/MSMS/outputFiles/manualEdits/MZminePolarPosReleasedMetaboliteswIDS_IndividualSamples_manualEdits.csv", header=TRUE,sep=",",check.names = FALSE)
