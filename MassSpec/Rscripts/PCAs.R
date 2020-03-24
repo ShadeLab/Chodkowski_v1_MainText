@@ -10,7 +10,13 @@ mDataSplit <- data.frame(do.call('rbind', strsplit(as.character(mData),'_',fixed
 #Split time remove replicate
 mDataSplitTime <- data.frame(do.call('rbind', strsplit(as.character(mDataSplit$X3),'.',fixed=TRUE)))
 #Bring metaData together
-metaD <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+metaD <- data.frame("Species"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+
+#Prepare metadata table for varpart
+metaDvP <- metaD
+#Add row names
+row.names(metaDvP) <- mData
+
 metaD <- data.frame("Group"=paste(mDataSplit$X2,mDataSplitTime$X1))
 #Remove column names, remove row 1, and transpose dataframe
 #colnames(dataNorm) <- NULL
@@ -65,6 +71,8 @@ sd_axis1 <- ag$PCoA1
 #Std axis 2
 sd_axis2 <- ag$PCoA2
 
+library(ggplot2)
+
 PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   coord_fixed()+
@@ -84,6 +92,14 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 
 #ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos,device="png",width=15,height=8.7,dpi=600)
 
+#Run variation partitioning.
+PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
+#Species: 0.63722 #Time: 0.00587 #Species + Time:0.69384
+
+
+
+
+
 #####Polar Neg#####
 dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarNeg_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
 #Create metaData from column headers
@@ -94,7 +110,13 @@ mDataSplit <- data.frame(do.call('rbind', strsplit(as.character(mData),'_',fixed
 #Split time remove replicate
 mDataSplitTime <- data.frame(do.call('rbind', strsplit(as.character(mDataSplit$X3),'.',fixed=TRUE)))
 #Bring metaData together
-metaD <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+metaD <- data.frame("Species"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+
+#Prepare metadata table for varpart
+metaDvP <- metaD
+#Add row names
+row.names(metaDvP) <- mData
+
 metaD <- data.frame("Group"=paste(mDataSplit$X2,mDataSplitTime$X1))
 #Remove column names, remove row 1, and transpose dataframe
 #colnames(dataNorm) <- NULL
@@ -170,6 +192,14 @@ PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 
 #ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=PCA_PolarNeg,device="png",width=15,height=8.7,units="in",dpi=600)
 
+#Run variation partitioning.
+PNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
+#Species: 0.66053 #Time: 0.00160 #Species + Time:0.71284
+
+
+
+
+
 #####NonPolar Pos#####
 dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarPos_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
 #Create metaData from column headers
@@ -180,7 +210,13 @@ mDataSplit <- data.frame(do.call('rbind', strsplit(as.character(mData),'_',fixed
 #Split time remove replicate
 mDataSplitTime <- data.frame(do.call('rbind', strsplit(as.character(mDataSplit$X3),'.',fixed=TRUE)))
 #Bring metaData together
-metaD <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+metaD <- data.frame("Species"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+
+#Prepare metadata table for varpart
+metaDvP <- metaD
+#Add row names
+row.names(metaDvP) <- mData
+
 metaD <- data.frame("Group"=paste(mDataSplit$X2,mDataSplitTime$X1))
 #Remove column names, remove row 1, and transpose dataframe
 #colnames(dataNorm) <- NULL
@@ -256,6 +292,14 @@ PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 
 #ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=PCA_NonPolarPos,device="png",width=15,height=8.7,dpi=600)
 
+#Run variation partitioning.
+NPPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
+#Species: 0.80584 #Time: -0.03962 #Species + Time:0.83962
+
+
+
+
+
 #####NonPolar Neg#####
 dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarNeg_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
 #Create metaData from column headers
@@ -266,7 +310,13 @@ mDataSplit <- data.frame(do.call('rbind', strsplit(as.character(mData),'_',fixed
 #Split time remove replicate
 mDataSplitTime <- data.frame(do.call('rbind', strsplit(as.character(mDataSplit$X3),'.',fixed=TRUE)))
 #Bring metaData together
-metaD <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+metaD <- data.frame("Species"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+
+#Prepare metadata table for varpart
+metaDvP <- metaD
+#Add row names
+row.names(metaDvP) <- mData
+
 metaD <- data.frame("Group"=paste(mDataSplit$X2,mDataSplitTime$X1))
 #Remove column names, remove row 1, and transpose dataframe
 #colnames(dataNorm) <- NULL
@@ -342,6 +392,13 @@ PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 
 #ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=PCA_NonPolarNeg,device="png",width=15,height=8.7,dpi=600)
 
+#Run variation partitioning.
+NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
+#Species: 0.81520 #Time: -0.04966 #Species + Time:0.85304
+
+
+
+#Let's put all mass spec analyses together
 
 #Make panels sizes the same size and save plots
 library(gridExtra)
