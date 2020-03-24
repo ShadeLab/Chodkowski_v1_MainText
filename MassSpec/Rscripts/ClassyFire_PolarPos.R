@@ -13,13 +13,27 @@ BtMSMS <- BtFinalIDsPolarPos[which(BtFinalIDsPolarPos %in% MSMSdat$"row ID")] #4
 CvMSMS <- CvFinalIDsPolarPos[which(CvFinalIDsPolarPos %in% MSMSdat$"row ID")] #366/1692 filtered features
 PsMSMS <- PsFinalIDsPolarPos[which(PsFinalIDsPolarPos %in% MSMSdat$"row ID")] #335/1917 filtered features
 
-#Read in the final table of IDed metabolites. This has been manually manipulated to remove any additional redundancies between MSL1 data MSL2
+#Read in the final table of IDed metabolites. This has been manually edited to remove any additional redundancies between MSL1 data MSL2
 finalMetabolitePP <- read.csv("MassSpec/releaseAnalysis/MSMS/outputFiles/manualEdits/MZminePolarPosReleasedMetaboliteswIDS_IndividualSamples_manualEdits.csv", header=TRUE,sep=",",check.names = FALSE)
 
-#One last Venn for only identified metabolites
-BtMSSpecsIDed <- BtMSMS[which(BtMSMS %in% finalMetabolitePP$ID)]
-CvMSSpecsIDed <- CvMSMS[which(CvMSMS %in% finalMetabolitePP$ID)]
-PsMSSpecsIDed <- PsMSMS[which(PsMSMS %in% finalMetabolitePP$ID)]
+#Match released exometabolites with MSMS data- however, this ignores JGI matches without MSMS data
+#BtMSSpecsIDed <- BtMSMS[which(BtMSMS %in% finalMetabolitePP$ID)]
+#CvMSSpecsIDed <- CvMSMS[which(CvMSMS %in% finalMetabolitePP$ID)]
+#PsMSSpecsIDed <- PsMSMS[which(PsMSMS %in% finalMetabolitePP$ID)]
+
+#Match released exometabolites with identities
+BtMSSpecsIDed <- BtFinalIDsPolarPos[which(BtFinalIDsPolarPos %in% finalMetabolitePP$ID)]
+CvMSSpecsIDed <- CvFinalIDsPolarPos[which(CvFinalIDsPolarPos %in% finalMetabolitePP$ID)]
+PsMSSpecsIDed <- PsFinalIDsPolarPos[which(PsFinalIDsPolarPos %in% finalMetabolitePP$ID)]
+
+#Let's create a venn diagram to see overlap between species in identified exometabolites
+library(VennDiagram)
+#Create a venn diagram
+finalFeats <- list(Bt=BtMSSpecsIDed,Cv=CvMSSpecsIDed,Ps=PsMSSpecsIDed)
+
+#Supplementary Figure 1
+venn.diagram(finalFeats,filename="Figures/SFig5/IdentifiedOverlappingFeatures_PolarPos.tiff")
+
 
 #After manually curating the final set of secreted metabolites, let's go back and find out which came from which organism
 #Extract Bt secreted metabolites
