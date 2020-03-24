@@ -16,10 +16,24 @@ PsMSMS <- PsFinalIDsPolarNeg[which(PsFinalIDsPolarNeg %in% MSMSdat$"row ID")] #2
 #Read in the final table of IDed metabolites. This has been manually manipulated to remove any additional redundancies between MSL1 data MSL2
 finalMetabolitePN <- read.csv("MassSpec/releaseAnalysis/MSMS/outputFiles/manualEdits/MZminePolarNegReleasedMetaboliteswIDS_IndividualSamples_manualEdits.csv", header=TRUE,sep=",",check.names = FALSE)
 
-#One last Venn for only identified metabolites
-BtMSSpecsIDed <- BtMSMS[which(BtMSMS %in% finalMetabolitePN$ID)]
-CvMSSpecsIDed <- CvMSMS[which(CvMSMS %in% finalMetabolitePN$ID)]
-PsMSSpecsIDed <- PsMSMS[which(PsMSMS %in% finalMetabolitePN$ID)]
+#Match released exometabolites with MSMS data- however, this ignores JGI matches without MSMS data
+#BtMSSpecsIDed <- BtMSMS[which(BtMSMS %in% finalMetabolitePN$ID)]
+#CvMSSpecsIDed <- CvMSMS[which(CvMSMS %in% finalMetabolitePN$ID)]
+#PsMSSpecsIDed <- PsMSMS[which(PsMSMS %in% finalMetabolitePN$ID)]
+
+#Match released exometabolites with identities
+BtMSSpecsIDed <- BtFinalIDsPolarNeg[which(BtFinalIDsPolarNeg %in% finalMetabolitePN$ID)]
+CvMSSpecsIDed <- CvFinalIDsPolarNeg[which(CvFinalIDsPolarNeg %in% finalMetabolitePN$ID)]
+PsMSSpecsIDed <- PsFinalIDsPolarNeg[which(PsFinalIDsPolarNeg %in% finalMetabolitePN$ID)]
+
+#Let's create a venn diagram to see overlap between species in identified exometabolites
+library(VennDiagram)
+#Create a venn diagram
+finalFeats <- list(Bt=BtMSSpecsIDed,Cv=CvMSSpecsIDed,Ps=PsMSSpecsIDed)
+
+#Supplementary Figure 1
+venn.diagram(finalFeats,filename="Figures/SFig5/IdentifiedOverlappingFeatures_PolarNeg.tiff")
+
 
 #After manually curating the final set of secreted metabolites, let's go back and find out which came from which organism
 #Extract Bt secreted metabolites

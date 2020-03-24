@@ -21,6 +21,15 @@ BtMSSpecsIDed <- BtMSMS[which(BtMSMS %in% finalMetaboliteNPN$ID)]
 CvMSSpecsIDed <- CvMSMS[which(CvMSMS %in% finalMetaboliteNPN$ID)]
 PsMSSpecsIDed <- PsMSMS[which(PsMSMS %in% finalMetaboliteNPN$ID)]
 
+#Let's create a venn diagram to see overlap between species in identified exometabolites
+library(VennDiagram)
+#Create a venn diagram
+finalFeats <- list(Bt=BtMSSpecsIDed,Cv=CvMSSpecsIDed,Ps=PsMSSpecsIDed)
+
+#Supplementary Figure 1
+venn.diagram(finalFeats,filename="Figures/SFig5/IdentifiedOverlappingFeatures_NonPolarNeg.tiff")
+
+
 #After manually curating the final set of secreted metabolites, let's go back and find out which came from which organism
 #Extract Bt secreted metabolites
 Btmetabs <- finalMetaboliteNPN[which(finalMetaboliteNPN$ID %in% BtFinalIDsNonPolarNeg),]
