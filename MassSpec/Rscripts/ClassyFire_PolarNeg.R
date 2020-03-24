@@ -9,7 +9,7 @@ PsFinalIDsPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalID
 MSMSdat <- read.csv("MassSpec/releaseAnalysis/MSMS/initialFiles/MZmine_PolarNegMSMS_peakArea.csv",check.names=F)
 
 #They match! Filtered features with MSMS data
-BtMSMS <- BtFinalIDsPolarNeg[which(BtFinalIDsPolarNeg %in% MSMSdat$"row ID")] #235/1327 filtered features
+BtMSMS <- BtFinalIDsPolarNeg[which(BtFinalIDsPolarNeg %in% MSMSdat$"row ID")] #235/1326 filtered features
 CvMSMS <- CvFinalIDsPolarNeg[which(CvFinalIDsPolarNeg %in% MSMSdat$"row ID")] #193/638 filtered features
 PsMSMS <- PsFinalIDsPolarNeg[which(PsFinalIDsPolarNeg %in% MSMSdat$"row ID")] #205/975 filtered features
 
