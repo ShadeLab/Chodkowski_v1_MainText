@@ -207,6 +207,8 @@ PCA_PN_Ps <- PCA_PolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=ele
 
 library(patchwork)
 PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
+PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
+  + theme(legend.position="right") + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
 ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
 
   #theme_bw() +
