@@ -35,7 +35,7 @@ groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
 mod <- betadisper(dist.Metab, groups)
 #Calculates spatial median, not center of mass
-plot(mod)
+#plot(mod)
 #pcoa.Metab <- cmdscale(dist.Metab, eig=TRUE)
 #Variance explained should match individual plots from Metaboanalyst
 PC1var <- mod$eig[1]/sum(mod$eig) #Checks out
@@ -72,23 +72,26 @@ sd_axis1 <- ag$PCoA1
 sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
-
+options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  coord_fixed()+
+  #coord_fixed()+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
-  theme_bw() +
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
-  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
+  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "right")
+  theme(legend.position = "none")
+  
+   +
+  #theme_bw() +
+  #theme(legend.position = "right")
 
 #ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos,device="png",width=15,height=8.7,dpi=600)
 
@@ -135,7 +138,7 @@ groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
 mod <- betadisper(dist.Metab, groups)
 #Calculates spatial median, not center of mass
-plot(mod)
+#plot(mod)
 #pcoa.Metab <- cmdscale(dist.Metab, eig=TRUE)
 #Variance explained should match individual plots from Metaboanalyst
 PC1var <- mod$eig[1]/sum(mod$eig) #Checks out
@@ -173,22 +176,26 @@ sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
 
+#options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  coord_fixed()+
+  #coord_fixed()+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
-  theme_bw() +
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "right")
+  theme(legend.position = "none")
+
+  
+  #theme_bw() +
+  #theme(legend.position = "right")
 
 #ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=PCA_PolarNeg,device="png",width=15,height=8.7,units="in",dpi=600)
 
@@ -235,7 +242,7 @@ groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
 mod <- betadisper(dist.Metab, groups)
 #Calculates spatial median, not center of mass
-plot(mod)
+#plot(mod)
 #pcoa.Metab <- cmdscale(dist.Metab, eig=TRUE)
 #Variance explained should match individual plots from Metaboanalyst
 PC1var <- mod$eig[1]/sum(mod$eig) #Checks out
@@ -275,20 +282,23 @@ library(ggplot2)
 
 PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  coord_fixed()+
+  #coord_fixed()+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
-  theme_bw() +
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "right")
+  theme(legend.position = "none")
+
+  #theme_bw() +
+  #theme(legend.position = "right")
+
 
 #ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=PCA_NonPolarPos,device="png",width=15,height=8.7,dpi=600)
 
@@ -335,7 +345,7 @@ groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
 mod <- betadisper(dist.Metab, groups)
 #Calculates spatial median, not center of mass
-plot(mod)
+#plot(mod)
 #pcoa.Metab <- cmdscale(dist.Metab, eig=TRUE)
 #Variance explained should match individual plots from Metaboanalyst
 PC1var <- mod$eig[1]/sum(mod$eig) #Checks out
@@ -375,20 +385,22 @@ library(ggplot2)
 
 PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  coord_fixed()+
+  #coord_fixed()+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
-  theme_bw() +
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "right")
+  theme(legend.position = "none")
+
+  #theme_bw() +
+  #theme(legend.position = "right")
 
 #ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=PCA_NonPolarNeg,device="png",width=15,height=8.7,dpi=600)
 
@@ -404,8 +416,8 @@ NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 library(gridExtra)
 library(egg)
 
-pca_fixedPP <- set_panel_size(PCA_PolarPos,  width  = unit(15, "in"), height = unit(8.7, "in"))
-pca_fixedPN <- set_panel_size(PCA_PolarNeg,  width  = unit(15, "in"), height = unit(8.7, "in"))
+pca_fixedPP <- set_panel_size(PCA_PolarPos,  width  = unit(5, "in"), height = unit(3, "in"))
+pca_fixedPN <- set_panel_size(PCA_PolarNeg,  width  = unit(5, "in"), height = unit(3, "in"))
 pca_fixedNPP <- set_panel_size(PCA_NonPolarPos,  width  = unit(15, "in"), height = unit(8.7, "in"))
 pca_fixedNPN <- set_panel_size(PCA_NonPolarNeg,  width  = unit(15, "in"), height = unit(8.7, "in"))
 
@@ -414,7 +426,7 @@ gaPN <- arrangeGrob(pca_fixedPN)
 gaNPP <- arrangeGrob(pca_fixedNPP)
 gaNPN <- arrangeGrob(pca_fixedNPN)
 
-ggsave("Figures/Fig1/PCA_PolarPos.png",plot=gaPP,device="png",width=20,height=11.6,dpi=600)
-ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=gaPN,device="png",width=20,height=11.6,dpi=600)
+ggsave("Figures/Fig1/PCA_PolarPos.png",plot=gaPP,device="png",width=7,height=5,dpi=300)
+ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=gaPN,device="png",width=7,height=5,dpi=300)
 ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=gaNPP,device="png",width=20,height=11.6,dpi=600)
 ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=gaNPN,device="png",width=20,height=11.6,dpi=600)
