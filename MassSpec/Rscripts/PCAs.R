@@ -72,7 +72,8 @@ sd_axis1 <- ag$PCoA1
 sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
-options(repr.plot.width = 5, repr.plot.height = 3)
+#library(repr)
+#options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -83,13 +84,20 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
+  scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
   theme(legend.position = "none")
-  
-   +
+
+PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-80) + theme(axis.title=element_blank())
+PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
+PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
+
+library(patchwork)
+PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps)
+ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
+
   #theme_bw() +
   #theme(legend.position = "right")
 
@@ -175,7 +183,7 @@ sd_axis1 <- ag$PCoA1
 sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
-
+#library(repr)
 #options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
@@ -187,13 +195,20 @@ PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
+  scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
   theme(legend.position = "none")
 
-  
+PCA_PN_Bt <- PCA_PolarNeg + ylim(-125,0) + xlim(-250,-125) + theme(axis.title=element_blank())
+PCA_PN_Cv <- PCA_PolarNeg + ylim(80,190) + xlim(15,60) + theme(axis.title=element_blank())
+PCA_PN_Ps <- PCA_PolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=element_blank())
+
+library(patchwork)
+PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
+ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
+
   #theme_bw() +
   #theme(legend.position = "right")
 
@@ -279,7 +294,8 @@ sd_axis1 <- ag$PCoA1
 sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
-
+#library(repr)
+#options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -290,11 +306,19 @@ PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
+  scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
   theme(legend.position = "none")
+
+PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-80) + theme(axis.title=element_blank())
+PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
+PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
+
+library(patchwork)
+PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps)
+ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
 
   #theme_bw() +
   #theme(legend.position = "right")
@@ -382,7 +406,8 @@ sd_axis1 <- ag$PCoA1
 sd_axis2 <- ag$PCoA2
 
 library(ggplot2)
-
+#library(repr)
+#options(repr.plot.width = 5, repr.plot.height = 3)
 PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -393,11 +418,19 @@ PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(0.1,0.75,1.5,3,4,5))+
+  scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
   theme(legend.position = "none")
+
+PCA_NPN_Bt <- PCA_NonPolarNeg + ylim(-125,0) + xlim(-250,-125) + theme(axis.title=element_blank())
+PCA_NPN_Cv <- PCA_NonPolarNeg + ylim(80,190) + xlim(15,60) + theme(axis.title=element_blank())
+PCA_NPN_Ps <- PCA_NonPolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=element_blank())
+
+library(patchwork)
+PCA_NonPolarNeg_plots <- wrap_plots(PCA_NonPolarNeg,PCA_NPN_Cv,PCA_NPN_Bt,PCA_NPN_Ps)
+ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=PCA_NonPolarNeg_plots,device="png",width=15,height=8.7,dpi=300)
 
   #theme_bw() +
   #theme(legend.position = "right")
