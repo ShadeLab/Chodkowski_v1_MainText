@@ -88,14 +88,20 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "none")
+  theme(legend.position="none",text = element_text(size=18))
 
 PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-80) + theme(axis.title=element_blank())
 PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
 PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps)
+PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps) +
+ theme(legend.position="right",text = element_text(size=20)) + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
+
+PCA_PolarPos_plots <- PCA_PolarPos + PCA_PP_Cv +
+  theme(legend.position="right",text = element_text(size=18)) + guides(color=guide_legend(title = "Strain",order=1),fill=guide_legend(title = "Strain",order=2),size=guide_legend(title = "Time",order=3)) +
+  PCA_PP_Bt + PCA_PP_Ps + plot_layout(ncol=2,nrow=2)
+
 ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
 
   #theme_bw() +
@@ -206,7 +212,6 @@ PCA_PN_Cv <- PCA_PolarNeg + ylim(80,190) + xlim(15,60) + theme(axis.title=elemen
 PCA_PN_Ps <- PCA_PolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
 PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
   + theme(legend.position="right") + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
 ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
