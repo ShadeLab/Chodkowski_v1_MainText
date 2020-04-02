@@ -108,8 +108,11 @@ plot <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
        geom_bar(position=position_dodge2(preserve = 'single'),stat="identity") +
        scale_fill_manual(values=cbPalette)
 
-plots <- plot + facet_grid(rows = vars(org)) + labs(y = "Frequency",level="Identification Confidence") + theme(axis.text.x = element_text(angle = 45, hjust = 1,size=16),axis.title.x = element_blank(),axis.text.y = element_text(size=16),axis.title.y = element_text(size=16))
-#ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/MonoCulturePaper/MassSpec/ClassyFire/CLASSYFIRE_ClassLevel_allPolaritiesAndIonsCombined.tif",plot=plots,device="tiff",width=30, units="cm",dpi=600)
+plots <- plot + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,size=16),axis.title.x = element_blank(),axis.text.y = element_text(size=16),axis.title.y = element_text(size=16),legend.title=element_text(size=12))
+
+
+ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/MonoCulturePaper/MassSpec/ClassyFire/CLASSYFIRE_ClassLevel_allPolaritiesAndIonsCombined.eps",plot=plots,device="eps",width=30, units="cm",dpi=600)
 
 ###Direct Parent level
 
