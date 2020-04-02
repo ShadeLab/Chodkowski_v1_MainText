@@ -74,6 +74,9 @@ sd_axis2 <- ag$PCoA2
 library(ggplot2)
 #library(repr)
 #options(repr.plot.width = 5, repr.plot.height = 3)
+#Change time from factor to numeric
+centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
+
 PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -81,33 +84,29 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
-  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
-  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
+  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
+  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position="none",text = element_text(size=18))
+  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 20),legend.title=element_text(size=20))
 
-PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-80) + theme(axis.title=element_blank())
+PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-75) + theme(axis.title=element_blank())
 PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
 PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps) +
- theme(legend.position="right",text = element_text(size=20)) + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
+#PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps) +
+# theme(legend.position="right",text = element_text(size=20)) + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
 
 PCA_PolarPos_plots <- PCA_PolarPos + PCA_PP_Cv +
-  theme(legend.position="right",text = element_text(size=18)) + guides(color=guide_legend(title = "Strain",order=1),fill=guide_legend(title = "Strain",order=2),size=guide_legend(title = "Time",order=3)) +
-  PCA_PP_Bt + PCA_PP_Ps + plot_layout(ncol=2,nrow=2)
+  theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
+  PCA_PP_Bt + PCA_PP_Ps + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
-ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
+ggsave("Figures/Fig1/PCA_PolarPos.eps",plot=PCA_PolarPos_plots,device="eps",width=15,height=10,dpi=600)
 
-  #theme_bw() +
-  #theme(legend.position = "right")
-
-#ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos,device="png",width=15,height=8.7,dpi=600)
 
 #Run variation partitioning.
 PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -191,6 +190,9 @@ sd_axis2 <- ag$PCoA2
 library(ggplot2)
 #library(repr)
 #options(repr.plot.width = 5, repr.plot.height = 3)
+#Change time from factor to numeric
+centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
+
 PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -198,28 +200,28 @@ PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
-  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
-  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
+  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
+  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "none")
+  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 20),legend.title=element_text(size=20))
 
 PCA_PN_Bt <- PCA_PolarNeg + ylim(-125,0) + xlim(-250,-125) + theme(axis.title=element_blank())
 PCA_PN_Cv <- PCA_PolarNeg + ylim(80,190) + xlim(15,60) + theme(axis.title=element_blank())
 PCA_PN_Ps <- PCA_PolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
-  + theme(legend.position="right") + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
-ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
+#PCA_PolarNeg_plots <- wrap_plots(PCA_PolarNeg,PCA_PN_Cv,PCA_PN_Bt,PCA_PN_Ps)
+#  + theme(legend.position="right") + guides(fill=guide_legend(title = "Strain",order=1),size=guide_legend(title = "Time",order=2),color=guide_legend(order=3))
 
-  #theme_bw() +
-  #theme(legend.position = "right")
+PCA_PolarNeg_plots <- PCA_PolarNeg + PCA_PN_Cv +
+  theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
+  PCA_PN_Bt + PCA_PN_Ps + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
-#ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=PCA_PolarNeg,device="png",width=15,height=8.7,units="in",dpi=600)
+ggsave("Figures/Fig1/PCA_PolarNeg.eps",plot=PCA_PolarNeg_plots,device="eps",width=15,height=10,dpi=600)
 
 #Run variation partitioning.
 PNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -303,6 +305,9 @@ sd_axis2 <- ag$PCoA2
 library(ggplot2)
 #library(repr)
 #options(repr.plot.width = 5, repr.plot.height = 3)
+#Change time from factor to numeric
+centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
+
 PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -310,28 +315,29 @@ PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
-  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
-  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
+  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
+  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "none")
+  theme(legend.position="none",axis.title = element_text(size = 20),axis.text = element_text(size = 20),legend.title=element_text(size=20))
 
-PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-80) + theme(axis.title=element_blank())
-PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
-PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
+PCA_NPP_Bt <- PCA_NonPolarPos + ylim(-70,-37.5) + xlim(-40,-17.5) + theme(axis.title=element_blank())
+PCA_NPP_Cv <- PCA_NonPolarPos + ylim(30,70) + xlim(-45,-10) + theme(axis.title=element_blank())
+PCA_NPP_Ps <- PCA_NonPolarPos + ylim(-20,25) + xlim(45,110) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps)
-ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
+#PCA_NonPolarPos_plots <- wrap_plots(PCA_NonPolarPos,PCA_NPP_Cv,PCA_NPP_Bt,PCA_NPP_Ps)
+#ggsave("Figures/Fig1/PCA_PolarPos.png",plot=PCA_PolarPos_plots,device="png",width=15,height=8.7,dpi=300)
 
-  #theme_bw() +
-  #theme(legend.position = "right")
+PCA_NonPolarPos_plots <- PCA_NonPolarPos + PCA_NPP_Cv +
+  theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
+  PCA_NPP_Bt + PCA_NPP_Ps + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
+ggsave("Figures/Fig1/PCA_NonPolarPos.eps",plot=PCA_NonPolarPos_plots,device="eps",width=15,height=10,dpi=600)
 
-#ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=PCA_NonPolarPos,device="png",width=15,height=8.7,dpi=600)
 
 #Run variation partitioning.
 NPPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -415,6 +421,9 @@ sd_axis2 <- ag$PCoA2
 library(ggplot2)
 #library(repr)
 #options(repr.plot.width = 5, repr.plot.height = 3)
+#Change time from factor to numeric
+centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
+
 PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
   #coord_fixed()+
@@ -422,27 +431,28 @@ PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
   geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
-  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% variance explained)", sep = ""))+
-  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% variance explained)", sep = ""))+
+  xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
+  ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
   scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_size_manual(values = c(2,3.5,5,7,9,12))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position = "none")
+  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 20),legend.title=element_text(size=20))
 
-PCA_NPN_Bt <- PCA_NonPolarNeg + ylim(-125,0) + xlim(-250,-125) + theme(axis.title=element_blank())
-PCA_NPN_Cv <- PCA_NonPolarNeg + ylim(80,190) + xlim(15,60) + theme(axis.title=element_blank())
-PCA_NPN_Ps <- PCA_NonPolarNeg + ylim(-150,-50) + xlim(75,180) + theme(axis.title=element_blank())
+PCA_NPN_Bt <- PCA_NonPolarNeg + ylim(5,27.5) + xlim(-100,-55) + theme(axis.title=element_blank())
+PCA_NPN_Cv <- PCA_NonPolarNeg + ylim(22.5,47.5) + xlim(45,65) + theme(axis.title=element_blank())
+PCA_NPN_Ps <- PCA_NonPolarNeg + ylim(-90,-27.5) + xlim(-15,55) + theme(axis.title=element_blank())
 
 library(patchwork)
-PCA_NonPolarNeg_plots <- wrap_plots(PCA_NonPolarNeg,PCA_NPN_Cv,PCA_NPN_Bt,PCA_NPN_Ps)
-ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=PCA_NonPolarNeg_plots,device="png",width=15,height=8.7,dpi=300)
+#PCA_NonPolarNeg_plots <- wrap_plots(PCA_NonPolarNeg,PCA_NPN_Cv,PCA_NPN_Bt,PCA_NPN_Ps)
 
-  #theme_bw() +
-  #theme(legend.position = "right")
+PCA_NonPolarNeg_plots <- PCA_NonPolarNeg + PCA_NPN_Cv +
+  theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
+  PCA_NPN_Bt + PCA_NPN_Ps + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
-#ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=PCA_NonPolarNeg,device="png",width=15,height=8.7,dpi=600)
+ggsave("Figures/Fig1/PCA_NonPolarNeg.eps",plot=PCA_NonPolarNeg_plots,device="eps",width=15,height=10,dpi=600)
+
 
 #Run variation partitioning.
 NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -452,21 +462,41 @@ NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 
 #Let's put all mass spec analyses together
 
+library(patchwork)
+
+PCA_plots <- PCA_PolarPos + PCA_PolarNeg +
+  theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
+  PCA_NonPolarPos + PCA_NonPolarNeg + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
+
+
+ggsave("Figures/Fig1/PCA_Plots.eps",plot=PCA_plots,device="eps",width=15,height=10,dpi=600)
+
+
+
+
+
+
+
+
+
+
+
+
 #Make panels sizes the same size and save plots
-library(gridExtra)
-library(egg)
+#library(gridExtra)
+#library(egg)
 
-pca_fixedPP <- set_panel_size(PCA_PolarPos,  width  = unit(5, "in"), height = unit(3, "in"))
-pca_fixedPN <- set_panel_size(PCA_PolarNeg,  width  = unit(5, "in"), height = unit(3, "in"))
-pca_fixedNPP <- set_panel_size(PCA_NonPolarPos,  width  = unit(15, "in"), height = unit(8.7, "in"))
-pca_fixedNPN <- set_panel_size(PCA_NonPolarNeg,  width  = unit(15, "in"), height = unit(8.7, "in"))
+#pca_fixedPP <- set_panel_size(PCA_PolarPos,  width  = unit(5, "in"), height = unit(3, "in"))
+#pca_fixedPN <- set_panel_size(PCA_PolarNeg,  width  = unit(5, "in"), height = unit(3, "in"))
+#pca_fixedNPP <- set_panel_size(PCA_NonPolarPos,  width  = unit(15, "in"), height = unit(8.7, "in"))
+#pca_fixedNPN <- set_panel_size(PCA_NonPolarNeg,  width  = unit(15, "in"), height = unit(8.7, "in"))
 
-gaPP <- arrangeGrob(pca_fixedPP)
-gaPN <- arrangeGrob(pca_fixedPN)
-gaNPP <- arrangeGrob(pca_fixedNPP)
-gaNPN <- arrangeGrob(pca_fixedNPN)
+#gaPP <- arrangeGrob(pca_fixedPP)
+#gaPN <- arrangeGrob(pca_fixedPN)
+#gaNPP <- arrangeGrob(pca_fixedNPP)
+#gaNPN <- arrangeGrob(pca_fixedNPN)
 
-ggsave("Figures/Fig1/PCA_PolarPos.png",plot=gaPP,device="png",width=7,height=5,dpi=300)
-ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=gaPN,device="png",width=7,height=5,dpi=300)
-ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=gaNPP,device="png",width=20,height=11.6,dpi=600)
-ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=gaNPN,device="png",width=20,height=11.6,dpi=600)
+#ggsave("Figures/Fig1/PCA_PolarPos.png",plot=gaPP,device="png",width=7,height=5,dpi=300)
+#ggsave("Figures/Fig1/PCA_PolarNeg.png",plot=gaPN,device="png",width=7,height=5,dpi=300)
+#ggsave("Figures/Fig1/PCA_NonPolarPos.png",plot=gaNPP,device="png",width=20,height=11.6,dpi=600)
+#ggsave("Figures/Fig1/PCA_NonPolarNeg.png",plot=gaNPN,device="png",width=20,height=11.6,dpi=600)
