@@ -98,21 +98,32 @@ allLevelsCat <- allLevelsSum %>% top_n(10)
 #Obtain top 10 from AllLevels
 AllLevelsT10 <- AllLevels[which(AllLevels$Var1 %in% allLevelsCat$Var1),]
 
+#Order bars
+AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("Azoles", "Fatty Acyls", "Organonitrogen compounds",
+                      "Organooxygen compounds", "Carboxylic acids and derivatives","Pyridines and derivatives",
+                      "Purine nucleosides","Imidazopyrimidines",
+                      "Benzene and substituted derivatives","Diazines"))
+
+
 #Plot
 library(ggplot2)
 
 #Prepare a colorblind palette
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73")
 
-plot <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
+plot_class <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
        geom_bar(position=position_dodge2(preserve = 'single'),stat="identity") +
        scale_fill_manual(values=cbPalette)
 
-plots <- plot + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1,size=16),axis.title.x = element_blank(),axis.text.y = element_text(size=16),axis.title.y = element_text(size=16),legend.title=element_text(size=12))
+plots_ClassLevel <- plot_class + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,size=12),axis.title.x = element_blank(),axis.text.y = element_text(size=12),
+  axis.title.y = element_text(size=16),legend.title=element_text(size=16),legend.text = element_text(size = 16),
+  strip.text.y = element_text(size=16))
+
+#ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_ClassLevel_allPolaritiesAndIonsCombined.eps",plot=plots,device="eps",width=30, height=10,units="cm",dpi=600)
 
 
-ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/MonoCulturePaper/MassSpec/ClassyFire/CLASSYFIRE_ClassLevel_allPolaritiesAndIonsCombined.eps",plot=plots,device="eps",width=30, units="cm",dpi=600)
+
 
 ###Direct Parent level
 
@@ -210,9 +221,39 @@ allLevelsCat <- allLevelsSum %>% top_n(10)
 #Obtain top 10 from AllLevels
 AllLevelsT10 <- AllLevels[which(AllLevels$Var1 %in% allLevelsCat$Var1),]
 
+#3 parent levels create 12. Remove O-glycosyl compounds and Benzene and substituted derivatives.
+#Keep N-acyl-alpha amino acids and derivatives because it has L1 identifications
+
+toRemove <- c(which(AllLevelsT10$Var1 %in% "Benzene and substituted derivatives"), which(AllLevelsT10$Var1 %in% "O-glycosyl compounds"))
+
+AllLevelsT10 <- AllLevelsT10[-c(toRemove),]
+
 #Plot
 library(ggplot2)
-plot <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
-       geom_bar(position=position_dodge2(preserve = 'single'),stat="identity")
-plots <- plot + facet_grid(rows = vars(org)) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-#ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/MonoCulturePaper/MassSpec/ClassyFire/CLASSYFIRE_DirectParentLevel_allPolaritiesAndIonsCombined.tif",plot=plots,device="tiff",width=30, units="cm",dpi=600)
+
+#Prepare a colorblind palette
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73")
+
+#Order bars
+
+AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("Peptides", "Alpha amino acids", "Purine nucleosides",
+                      "Medium-chain fatty acids", "Dipeptides","Hydroxypyrimidines","Hydroxybenzoic acid derivatives","N-acyl-alpha amino acids and derivatives",
+                      "N-acyl-alpha amino acids","6-alkylaminopurines"))
+
+plot_parent <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
+       geom_bar(position=position_dodge2(preserve = 'single'),stat="identity") +
+       scale_fill_manual(values=cbPalette) + theme(legend.position="none")
+
+plots_DirectParent <- plot_parent + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1,size=12),axis.title.x = element_blank(),axis.text.y = element_text(size=12),
+      axis.title.y = element_text(size=16),strip.text.y = element_text(size=16))
+
+#ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_DirectParentLevel_allPolaritiesAndIonsCombined.tif",plot=plots,device="tiff",width=30, units="cm",dpi=600)
+
+
+
+#Combine plots
+library(patchwork)
+plot_ClassyFire <- plots_ClassLevel / plots_DirectParent + plot_annotation(tag_levels = 'A')
+
+ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_allPolaritiesAndIonsCombined.eps",plot=plot_ClassyFire,device="eps",width=20, height=30, units="cm",dpi=600)
