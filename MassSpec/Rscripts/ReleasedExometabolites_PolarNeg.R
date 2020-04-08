@@ -549,7 +549,11 @@ table(table(allJGI$Label)) #32 0's, 141 1's- 32 exometabolites not detected
 table(table(allJGI$ID))  #Of the 141 identified, 103 unique, 19 isomers (103 + 2*19 =141)
 #Extract all JGI MSL1 exometabolites
 allMSL1 <- exoMetabolomeMonoCulture[which(exoMetabolomeMonoCulture$ID %in% allJGI$ID),]
-write.csv(allMSL1,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarNeg_JGI_MSL1_IDs.csv",row.names=FALSE)
+#Order columns
+allMSL1.O <- allMSL1[ , order(names(allMSL1))]
+write.csv(allMSL1.O,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarNeg_JGI_MSL1_IDs.csv",row.names=FALSE)
+#Export label names
+write.csv(allJGI,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarNeg_JGI_MSL1_Labels.csv",row.names=FALSE)
 
 #####Use PolarPos_JGI_MSL1_IDs.csv to find the top most accumulated exometabolites#####
 
