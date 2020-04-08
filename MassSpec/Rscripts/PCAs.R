@@ -472,11 +472,187 @@ PCA_plots <- PCA_PolarPos + PCA_PolarNeg +
 ggsave("Figures/Fig1/PCA_Plots.eps",plot=PCA_plots,device="eps",width=15,height=10,dpi=600)
 
 
+#Perform Protest
+library(vegan)
+library(dplyr)
+
+#####Polar Pos#####
+
+data <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarPos_pcaScores.csv", header=TRUE)
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(data, Strain == "Bt" & Name == "R1")
+BtR2 <- filter(data, Strain == "Bt" & Name == "R2")
+BtR3 <- filter(data, Strain == "Bt" & Name == "R3")
+BtR4 <- filter(data, Strain == "Bt" & Name == "R4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(data, Strain == "Cv" & Name == "R1")
+CvR2 <- filter(data, Strain == "Cv" & Name == "R2")
+CvR3 <- filter(data, Strain == "Cv" & Name == "R3")
+CvR4 <- filter(data, Strain == "Cv" & Name == "R4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(data, Strain == "Ps" & Name == "R1")
+PsR2 <- filter(data, Strain == "Ps" & Name == "R2")
+PsR3 <- filter(data, Strain == "Ps" & Name == "R3")
+PsR4 <- filter(data, Strain == "Ps" & Name == "R4")
+
+#Perform protest for Bt
+protest(X=BtR1[,2:3],Y=BtR2[,2:3])
+protest(X=BtR1[,2:3],Y=BtR3[,2:3])
+protest(X=BtR1[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR2[,2:3],Y=BtR3[,2:3])
+protest(X=BtR2[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,2:3],Y=CvR2[,2:3])
+protest(X=CvR1[,2:3],Y=CvR3[,2:3])
+protest(X=CvR1[,2:3],Y=CvR4[,2:3])
+protest(X=CvR2[,2:3],Y=CvR3[,2:3])
+protest(X=CvR2[,2:3],Y=CvR4[,2:3])
+protest(X=CvR3[,2:3],Y=CvR4[,2:3])
+
+#Perform protest for Ps
+protest(X=PsR1[,2:3],Y=PsR2[,2:3])
+protest(X=PsR1[,2:3],Y=PsR3[,2:3])
+protest(X=PsR1[,2:3],Y=PsR4[,2:3])
+protest(X=PsR2[,2:3],Y=PsR3[,2:3])
+protest(X=PsR2[,2:3],Y=PsR4[,2:3])
+protest(X=PsR3[,2:3],Y=PsR4[,2:3])
+
+#####Polar Neg#####
+
+data <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarNeg_pcaScores.csv", header=TRUE)
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(data, Strain == "Bt" & Name == "R1")
+BtR2 <- filter(data, Strain == "Bt" & Name == "R2")
+BtR3 <- filter(data, Strain == "Bt" & Name == "R3")
+BtR4 <- filter(data, Strain == "Bt" & Name == "R4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(data, Strain == "Cv" & Name == "R1")
+CvR2 <- filter(data, Strain == "Cv" & Name == "R2")
+CvR3 <- filter(data, Strain == "Cv" & Name == "R3")
+CvR4 <- filter(data, Strain == "Cv" & Name == "R4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(data, Strain == "Ps" & Name == "R1")
+PsR2 <- filter(data, Strain == "Ps" & Name == "R2")
+PsR3 <- filter(data, Strain == "Ps" & Name == "R3")
+PsR4 <- filter(data, Strain == "Ps" & Name == "R4")
+
+#Perform protest for Bt
+protest(X=BtR1[,2:3],Y=BtR2[,2:3])
+protest(X=BtR1[,2:3],Y=BtR3[,2:3])
+protest(X=BtR1[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR2[,2:3],Y=BtR3[,2:3])
+protest(X=BtR2[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,2:3],Y=CvR2[,2:3])
+protest(X=CvR1[,2:3],Y=CvR3[,2:3])
+protest(X=CvR1[,2:3],Y=CvR4[,2:3])
+protest(X=CvR2[,2:3],Y=CvR3[,2:3])
+protest(X=CvR2[,2:3],Y=CvR4[,2:3])
+protest(X=CvR3[,2:3],Y=CvR4[,2:3])
+
+#Perform protest for Ps
+protest(X=PsR1[,2:3],Y=PsR2[,2:3])
+protest(X=PsR1[,2:3],Y=PsR3[,2:3])
+protest(X=PsR1[,2:3],Y=PsR4[,2:3])
+protest(X=PsR2[,2:3],Y=PsR3[,2:3])
+protest(X=PsR2[,2:3],Y=PsR4[,2:3])
+protest(X=PsR3[,2:3],Y=PsR4[,2:3])
+
+#####NonPolar Pos#####
+
+data <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarPos_pcaScores.csv", header=TRUE)
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(data, Strain == "Bt" & Name == "R1")
+BtR2 <- filter(data, Strain == "Bt" & Name == "R2")
+BtR3 <- filter(data, Strain == "Bt" & Name == "R3")
+BtR4 <- filter(data, Strain == "Bt" & Name == "R4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(data, Strain == "Cv" & Name == "R1")
+CvR2 <- filter(data, Strain == "Cv" & Name == "R2")
+CvR3 <- filter(data, Strain == "Cv" & Name == "R3")
+CvR4 <- filter(data, Strain == "Cv" & Name == "R4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(data, Strain == "Ps" & Name == "R1")
+PsR2 <- filter(data, Strain == "Ps" & Name == "R2")
+PsR3 <- filter(data, Strain == "Ps" & Name == "R3")
+PsR4 <- filter(data, Strain == "Ps" & Name == "R4")
+
+#Perform protest for Bt- not enough data for R1
+protest(X=BtR2[,2:3],Y=BtR3[,2:3])
+protest(X=BtR2[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,2:3],Y=CvR2[2:6,2:3]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR1[,2:3],Y=CvR3[2:6,2:3]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR1[,2:3],Y=CvR4[2:6,2:3]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR2[,2:3],Y=CvR3[,2:3])
+protest(X=CvR2[,2:3],Y=CvR4[,2:3])
+protest(X=CvR3[,2:3],Y=CvR4[,2:3])
+
+#Perform protest for Ps - no data for R1
+protest(X=PsR2[,2:3],Y=PsR3[,2:3])
+protest(X=PsR2[2:6,2:3],Y=PsR4[,2:3]) #Remove first time point- missing data for Ps12.5h_BioRep4
+protest(X=PsR3[2:6,2:3],Y=PsR4[,2:3]) #Remove first time point- missing data for Ps12.5h_BioRep4
+
+#####NonPolar Neg#####
+
+data <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarNeg_pcaScores.csv", header=TRUE)
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(data, Strain == "Bt" & Name == "R1")
+BtR2 <- filter(data, Strain == "Bt" & Name == "R2")
+BtR3 <- filter(data, Strain == "Bt" & Name == "R3")
+BtR4 <- filter(data, Strain == "Bt" & Name == "R4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(data, Strain == "Cv" & Name == "R1")
+CvR2 <- filter(data, Strain == "Cv" & Name == "R2")
+CvR3 <- filter(data, Strain == "Cv" & Name == "R3")
+CvR4 <- filter(data, Strain == "Cv" & Name == "R4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(data, Strain == "Ps" & Name == "R1")
+PsR2 <- filter(data, Strain == "Ps" & Name == "R2")
+PsR3 <- filter(data, Strain == "Ps" & Name == "R3")
+PsR4 <- filter(data, Strain == "Ps" & Name == "R4")
+
+#Perform protest for Bt- not enough data for R1
+protest(X=BtR2[1:5,2:3],Y=BtR3[,2:3]) #Remove last time point- missing data for Bt45h_BioRep3
+protest(X=BtR2[1:5,2:3],Y=BtR4[,2:3]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[,2:3],Y=BtR4[,2:3])
+
+#Perform protest for Cv- not enough data for R1
+protest(X=CvR2[,2:3],Y=CvR3[,2:3])
+protest(X=CvR2[,2:3],Y=CvR4[,2:3])
+protest(X=CvR3[,2:3],Y=CvR4[,2:3])
+
+#Perform protest for Ps - no data for R1
+protest(X=PsR2[,2:3],Y=PsR3[,2:3])
+protest(X=PsR2[2:6,2:3],Y=PsR4[,2:3]) #Remove first time point- missing data for Ps12.5h_BioRep4
+protest(X=PsR3[2:6,2:3],Y=PsR4[,2:3]) #Remove first time point- missing data for Ps12.5h_BioRep4
 
 
 
 
 
+
+###summary
+all r2 > 0.9383
+all p <= 0.025
 
 
 
