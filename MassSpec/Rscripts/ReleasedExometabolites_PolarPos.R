@@ -467,7 +467,37 @@ exoMetabolomeReleased <- rbind(exoMetabolomeReleased,exoMetabolome[exoMetabolome
 
 #Re-order columns
 exoMetabolomeReleasedO <- exoMetabolomeReleased[ , order(names(exoMetabolomeReleased))]
-#Write csv
+
+#Make IDs rownames
+rownames(exoMetabolomeReleasedO) <- exoMetabolomeReleasedO$ID
+
+#Extract strain to separate dataframes
+Bt.ext <- exoMetabolomeReleasedO[, grep('Bt', names(exoMetabolomeReleasedO))]
+Cv.ext <- exoMetabolomeReleasedO[, grep('Cv', names(exoMetabolomeReleasedO))]
+Ps.ext <- exoMetabolomeReleasedO[, grep('Ps', names(exoMetabolomeReleasedO))]
+
+#Add standard to final IDs
+BtFinalIDsPolarPos <- append(BtFinalIDsPolarPos,107)
+CvFinalIDsPolarPos <- append(CvFinalIDsPolarPos,107)
+PsFinalIDsPolarPos <- append(PsFinalIDsPolarPos,107)
+
+#Obtain exometabolite IDs that did that fit criteria of released for a particular strain
+Bt.notR <- which(!rownames(Bt.ext) %in% BtFinalIDsPolarPos)
+Cv.notR <- which(!rownames(Cv.ext) %in% CvFinalIDsPolarPos)
+Ps.notR <- which(!rownames(Ps.ext) %in% PsFinalIDsPolarPos)
+
+#Convert values that do not match release criteria to 0s
+Bt.ext[Bt.notR,] = 0
+Cv.ext[Cv.notR,] = 0
+Ps.ext[Ps.notR,] = 0
+
+#Put the dataframe back together
+msInfo <- c("ID","MZ","RT")
+msInfo.cols <- which(colnames(exoMetabolomeReleasedO) %in% msInfo)
+exoMetabolomeReleasedO.f <- cbind(Bt.ext,Cv.ext,Ps.ext,exoMetabolomeReleasedO[,msInfo.cols])
+
+#Write csvs for HM (exoMetabolomeReleasedO) and PCA (exoMetabolomeReleasedO.f)
+write.csv(exoMetabolomeReleasedO.f,"MassSpec/releaseAnalysis/MS/outputFiles/MZminePolarPosallReleasedMetabolitesIndividualSamples.csv")
 write.csv(exoMetabolomeReleasedO,"MassSpec/releaseAnalysis/MS/outputFiles/MZminePolarPosallReleasedMetabolitesIndividualSamples.csv")
 
 #Note: MZminePolarPosallReleasedMetabolitesIndividualSamples.csv file was then manually edited to prepare for Metaboanalyst.
