@@ -1,9 +1,29 @@
 #Read in data
 
 ###Polar Pos###
+
+#Read in original dataframe
+data.O <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/MZminePolarPosallReleasedMetabolitesIndividualSamples.csv",header=TRUE,row.names=1)
+#How many zeroes exist?
+table(data.O[,1:71]==0)
+#Extract indicies of these 0's
+zeroI <- as.data.frame(which(data.O==0,arr.ind = T))
+
+#Now read in normalized data from Metaboanalyst
 dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarPos_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
+
+#Remove first row
+dataNorm.edit <- dataNorm[-1,]
+
+#Convert indicies of interest to 0s. These features did not pass release criteria for particular strains.
+
+for(i in 1:nrow(zeroI)){
+dataNorm.edit[zeroI$row[i],zeroI$col[i]] <- 0
+}
+
+#dataNorm.edit[zeroI$row, zeroI$col] <- 0
 #Create metaData from column headers
-mData <- colnames(dataNorm)
+mData <- colnames(dataNorm.edit)
 
 #Split names by "_" to get species
 mDataSplit <- data.frame(do.call('rbind', strsplit(as.character(mData),'_',fixed=TRUE)))
@@ -19,17 +39,17 @@ row.names(metaDvP) <- mData
 
 metaD <- data.frame("Group"=paste(mDataSplit$X2,mDataSplitTime$X1))
 #Remove column names, remove row 1, and transpose dataframe
-#colnames(dataNorm) <- NULL
-dataNorm <- dataNorm[-1,]
+#colnames(dataNorm.edit) <- NULL
+#dataNorm <- dataNorm[-1,]
 #Convert characters to numeric
-dataNorm <- as.data.frame(lapply(dataNorm, as.numeric))
+dataNorm.edit <- as.data.frame(lapply(dataNorm.edit, as.numeric))
 
 #transpose
-dataNormt <- t(dataNorm)
+dataNormt <- t(dataNorm.edit)
 
 #Load vegan
 library(vegan)
-dist.Metab <- vegdist(dataNormt, method="euclidean")
+dist.Metab <- vegdist(dataNormt, method="bray")
 #groups <- factor(c(rep(1,16), rep(2,8))
 groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
@@ -55,7 +75,7 @@ centroids$Label <- condI$Condition
 #Add time
 centroids$Time <- condI$Time
 #Flip y-axis
-centroids$PCoA2 <- centroids$PCoA2*-1
+#centroids$PCoA2 <- centroids$PCoA2*-1
 
 
 #Extract axes vectors from individual samples
@@ -91,11 +111,15 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
   scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 7)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 7)) +
-  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 20),legend.title=element_text(size=20))
+  theme(legend.position="right",axis.title = element_text(size = 22),axis.text = element_text(size = 20),legend.title=element_text(size=20))
 
 PCA_PP_Bt <- PCA_PolarPos + ylim(-55,25) + xlim(-200,-75) + theme(axis.title=element_blank())
 PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
 PCA_PP_Ps <- PCA_PolarPos + ylim(-80,-30) + xlim(50,90) + theme(axis.title=element_blank())
+
+PCA_PP_Bt <- PCA_PolarPos + ylim(0.025,0.075) + xlim(-0.55,-0.525) + theme(axis.title=element_blank())
+PCA_PP_Cv <- PCA_PolarPos + ylim(47.5,60) + xlim(42.5,57) + theme(axis.title=element_blank())
+PCA_PP_Ps <- PCA_PolarPos + ylim(0.3,0.375) + xlim(0.25,0.325) + theme(axis.title=element_blank())
 
 library(patchwork)
 #PCA_PolarPos_plots <- wrap_plots(PCA_PolarPos,PCA_PP_Cv,PCA_PP_Bt,PCA_PP_Ps) +
