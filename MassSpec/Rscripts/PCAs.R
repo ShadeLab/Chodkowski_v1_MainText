@@ -17,8 +17,10 @@ dataNorm.edit <- dataNorm[-1,]
 
 #Convert indicies of interest to 0s. These features did not pass release criteria for particular strains.
 
+
+#Different result with bray if this is 0. Really weird?
 for(i in 1:nrow(zeroI)){
-dataNorm.edit[zeroI$row[i],zeroI$col[i]] <- 0
+dataNorm.edit[zeroI$row[i],zeroI$col[i]] <- NA
 }
 
 #dataNorm.edit[zeroI$row, zeroI$col] <- 0
@@ -50,6 +52,7 @@ dataNormt <- t(dataNorm.edit)
 #Load vegan
 library(vegan)
 dist.Metab <- vegdist(dataNormt, method="bray")
+
 #groups <- factor(c(rep(1,16), rep(2,8))
 groups <- c(metaD$Group)
 #mod <- betadisper(dist.Metab ~ Condition + Time, metaD)
@@ -136,8 +139,15 @@ ggsave("Figures/Fig1/PCA_PolarPos.eps",plot=PCA_PolarPos_plots,device="eps",widt
 PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #Species: 0.63722 #Time: 0.00587 #Species + Time:0.69384
 
+#Run adonis
+condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
+rownames(condI) <- rownames(dataNormt)
+adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
 
-
+#Perform pairwise adonis post-hoc
+library(library(pairwiseAdonis))
+condI <- unite(condI, newcol, c(Condition, Time), remove=FALSE)
+pairwise.adonis(dist.Metab,condI$Cond)
 
 
 #####Polar Neg#####

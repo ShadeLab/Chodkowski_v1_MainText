@@ -467,8 +467,40 @@ exoMetabolomeReleased <- rbind(exoMetabolomeReleased,exoMetabolome[exoMetabolome
 
 #Re-order columns
 exoMetabolomeReleasedO <- exoMetabolomeReleased[ , order(names(exoMetabolomeReleased))]
-#Write csv
+
+#Make IDs rownames
+rownames(exoMetabolomeReleasedO) <- exoMetabolomeReleasedO$ID
+
+#Extract strain to separate dataframes
+Bt.ext <- exoMetabolomeReleasedO[, grep('Bt', names(exoMetabolomeReleasedO))]
+Cv.ext <- exoMetabolomeReleasedO[, grep('Cv', names(exoMetabolomeReleasedO))]
+Ps.ext <- exoMetabolomeReleasedO[, grep('Ps', names(exoMetabolomeReleasedO))]
+
+#Add standard to final IDs
+BtFinalIDsNonPolarNeg <- append(BtFinalIDsNonPolarNeg,14)
+CvFinalIDsNonPolarNeg <- append(CvFinalIDsNonPolarNeg,14)
+PsFinalIDsNonPolarNeg <- append(PsFinalIDsNonPolarNeg,14)
+
+#Obtain exometabolite IDs that did that fit criteria of released for a particular strain
+Bt.notR <- which(!rownames(Bt.ext) %in% BtFinalIDsNonPolarNeg)
+Cv.notR <- which(!rownames(Cv.ext) %in% CvFinalIDsNonPolarNeg)
+Ps.notR <- which(!rownames(Ps.ext) %in% PsFinalIDsNonPolarNeg)
+
+#Convert values that do not match release criteria to NAs
+Bt.ext[Bt.notR,] = NA
+Cv.ext[Cv.notR,] = NA
+Ps.ext[Ps.notR,] = NA
+
+#Put the dataframe back together
+msInfo <- c("ID","MZ","RT")
+msInfo.cols <- which(colnames(exoMetabolomeReleasedO) %in% msInfo)
+exoMetabolomeReleasedO.f <- cbind(Bt.ext,Cv.ext,Ps.ext,exoMetabolomeReleasedO[,msInfo.cols])
+
+NA_Index  <- as.data.frame(which(is.na(exoMetabolomeReleasedO.f), arr.ind=TRUE))
+
+#Write csv and save indicies of NAs
 write.csv(exoMetabolomeReleasedO,"MassSpec/releaseAnalysis/MS/outputFiles/MZmineNonPolarNegallReleasedMetabolitesIndividualSamples.csv")
+saveRDS(NA_Index,"MassSpec/releaseAnalysis/MS/outputFiles/NonPolarNeg_NA_Index.rds")
 
 #Note: MZmineNonPolarNegallReleasedMetabolitesIndividualSamples.csv file was then manually edited to prepare for Metaboanalyst.
 #This was done is two ways:
