@@ -346,6 +346,38 @@ BtFinalTransportGenes <- countsTransP45hFiltered[which(countsTransP45hFiltered$G
 BtFinalTransportGenesID <- transPorters[which(transPorters$GeneID %in% BtFinalTransportGenes$GeneID),]
 write.csv(BtFinalTransportGenesID,"RNAseq/diffGeneExp/outputFiles/BttransportLowEThreshAndpADJ.csv")
 
+#####Run lfc_analysis code before continuing#####
+#Which transport genes are significantly diff regulated and lfc > 1 compared to 
+
+#load lfc data 
+load("RNAseq/LFC/outputFiles/BthailandensisLFC.RData")
+
+norm <- counts(ddsMat, normalized=TRUE)
+geneID <- counts[which(counts$geneID %in% row.names(norm)),]
+
+lfc_mono_25.fc <- lfc_mono_25withinComparisionToTime0.fc
+lfc_mono_30.fc <- lfc_mono_30withinComparisionToTime0.fc
+lfc_mono_35.fc <- lfc_mono_35withinComparisionToTime0.fc
+lfc_mono_40.fc <- lfc_mono_40withinComparisionToTime0.fc
+lfc_mono_45.fc <- lfc_mono_45withinComparisionToTime0.fc
+
+lfc_mono_df <- data.frame(cbind(lfc_mono_25.fc,lfc_mono_30.fc,lfc_mono_35.fc,lfc_mono_40.fc,lfc_mono_45.fc))
+row.names(lfc_mono_df) <- geneID$geneID
+lfc_mono.df <- as.matrix(lfc_mono_df)
+
+#Obtain max row values
+row.MAX <- rowMaxs(lfc_mono.df)
+names(row.MAX) <- rownames(lfc_mono.df)
+
+#Obtain genes with lfc >1 in a stationary phase time point
+rowmax.LFC <- row.MAX[row.MAX>1]
+
+#Of the transport genes that are significantly diff regulated, which have a lfc > 1?
+BtTP_pvalLFC <- BtFinalTransportGenesID[which(BtFinalTransportGenesID$GeneID %in% names(rowmax.LFC)),]
+write.csv(BtTP_pvalLFC,"RNAseq/diffGeneExp/outputFiles/BttransportLowEThreshAndpADJandLFC.csv")
+
+
+
 
 #############################Chromobacterium##############################
 library(DESeq2)
@@ -389,6 +421,39 @@ CvFinalTransportGenes <- countsTransP45hFiltered[which(countsTransP45hFiltered$G
 CvFinalTransportGenesID <- transPorters[which(transPorters$GeneID %in% CvFinalTransportGenes$GeneID),]
 write.csv(CvFinalTransportGenesID,"RNAseq/diffGeneExp/outputFiles/CvtransportLowEThreshAndpADJ.csv")
 
+#####Run lfc_analysis code before continuing#####
+#Which transport genes are significantly diff regulated and lfc > 1 compared to 
+
+#load lfc data 
+load("RNAseq/LFC/outputFiles/CviolaceumLFC.RData")
+
+norm <- counts(ddsMat, normalized=TRUE)
+geneID <- counts[which(counts$geneID %in% row.names(norm)),]
+
+lfc_mono_25.fc <- lfc_mono_25withinComparisionToTime0.fc
+lfc_mono_30.fc <- lfc_mono_30withinComparisionToTime0.fc
+lfc_mono_35.fc <- lfc_mono_35withinComparisionToTime0.fc
+lfc_mono_40.fc <- lfc_mono_40withinComparisionToTime0.fc
+lfc_mono_45.fc <- lfc_mono_45withinComparisionToTime0.fc
+
+lfc_mono_df <- data.frame(cbind(lfc_mono_25.fc,lfc_mono_30.fc,lfc_mono_35.fc,lfc_mono_40.fc,lfc_mono_45.fc))
+row.names(lfc_mono_df) <- geneID$geneID
+lfc_mono.df <- as.matrix(lfc_mono_df)
+
+#Obtain max row values
+row.MAX <- rowMaxs(lfc_mono.df)
+names(row.MAX) <- rownames(lfc_mono.df)
+
+#Obtain genes with lfc >1 in a stationary phase time point
+rowmax.LFC <- row.MAX[row.MAX>1]
+
+#Of the transport genes that are significantly diff regulated, which have a lfc > 1?
+CvTP_pvalLFC <- CvFinalTransportGenesID[which(CvFinalTransportGenesID$GeneID %in% names(rowmax.LFC)),]
+write.csv(CvTP_pvalLFC,"RNAseq/diffGeneExp/outputFiles/CvtransportLowEThreshAndpADJandLFC.csv")
+
+
+
+
 #############################Pseudomonas##############################
 library(DESeq2)
 lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/P-syringae_LIBRARIES.txt", sep="\t",header=TRUE)
@@ -430,6 +495,39 @@ PsmonoFDRcutOff <- PsmonoDeseq[PsmonoFDR,]
 PsFinalTransportGenes <- countsTransP45hFiltered[which(countsTransP45hFiltered$GeneID %in% rownames(PsmonoFDRcutOff)),]
 PsFinalTransportGenesID <- transPorters[which(transPorters$GeneID %in% PsFinalTransportGenes$GeneID),]
 write.csv(PsFinalTransportGenesID,"RNAseq/diffGeneExp/outputFiles/PstransportLowEThreshAndpADJ.csv")
+
+#####Run lfc_analysis code before continuing#####
+#Which transport genes are significantly diff regulated and lfc > 1 compared to 
+
+#load lfc data 
+load("RNAseq/LFC/outputFiles/PsyringaeLFC.RData")
+
+norm <- counts(ddsMat, normalized=TRUE)
+geneID <- counts[which(counts$geneID %in% row.names(norm)),]
+
+lfc_mono_25.fc <- lfc_mono_25withinComparisionToTime0.fc
+lfc_mono_30.fc <- lfc_mono_30withinComparisionToTime0.fc
+lfc_mono_35.fc <- lfc_mono_35withinComparisionToTime0.fc
+lfc_mono_40.fc <- lfc_mono_40withinComparisionToTime0.fc
+lfc_mono_45.fc <- lfc_mono_45withinComparisionToTime0.fc
+
+lfc_mono_df <- data.frame(cbind(lfc_mono_25.fc,lfc_mono_30.fc,lfc_mono_35.fc,lfc_mono_40.fc,lfc_mono_45.fc))
+row.names(lfc_mono_df) <- geneID$geneID
+lfc_mono.df <- as.matrix(lfc_mono_df)
+
+#Obtain max row values
+row.MAX <- rowMaxs(lfc_mono.df)
+names(row.MAX) <- rownames(lfc_mono.df)
+
+#Obtain genes with lfc >1 in a stationary phase time point
+rowmax.LFC <- row.MAX[row.MAX>1]
+
+#Of the transport genes that are significantly diff regulated, which have a lfc > 1?
+PsTP_pvalLFC <- PsFinalTransportGenesID[which(PsFinalTransportGenesID$GeneID %in% names(rowmax.LFC)),]
+write.csv(PsTP_pvalLFC,"RNAseq/diffGeneExp/outputFiles/PstransportLowEThreshAndpADJandLFC.csv")
+
+
+
 
 ######From the annotated transporters for each isolate, an excel sheet containing loci in involved in transport were color-coded as follows:
 

@@ -5,13 +5,12 @@ library(KEGGREST)
 
 
 ##################################Burkholderia##################################
-
-lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/P-syringae_LIBRARIES.txt", sep="\t",header=TRUE)
-counts <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Psraw_counts.txt",sep="\t",header=TRUE)
-mapping <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Ps_diffExp_all.csv",header=TRUE,sep=",")
+lib <- read.csv(file="RNAseq/diffGeneExp/initialFiles/B-thailandensis_LIBRARIES.txt", sep="\t",header=TRUE)
+counts <- read.csv(file="RNAseq/diffGeneExp/initialFiles/B-thailandensis_raw_counts.txt",sep="\t",header=TRUE)
+mapping <- read.csv(file="RNAseq/diffGeneExp/initialFiles/Bt_diffExp_all.csv",header=TRUE,sep=",")
 
 #Load ddsMat OBJECT
-ddsMat <- readRDS("RNAseq/diffGeneExp/outputFiles/PsmonoDeseqObject.rds")
+ddsMat <- readRDS("RNAseq/diffGeneExp/outputFiles/BtmonoDeseqObject.rds")
 
 #LFC data
 load("RNAseq/LFC/outputFiles/BthailandensisLFC.RData")

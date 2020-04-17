@@ -105,7 +105,10 @@ PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 
 #Run variation partitioning.
 PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
+#####Varpart when non-released replaced by NAs
 #Species: 0.35787 #Time: 0.23528 #Species x Time:0.62992
+#####Varpart when non-released replaced by 0s
+#Species: 0.89178 #Time: -0.03724 #Species x Time:0.92299
 
 #Run adonis
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
@@ -278,6 +281,8 @@ PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 #Run variation partitioning.
 PNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #Species: 0.37597 #Time: 0.18233 #Species x Time:0.59106
+#####Varpart when non-released replaced by 0s
+#Species: 0.88964 #Time: -0.04022 #Species x Time:0.91744
 
 #Run adonis
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
@@ -451,6 +456,8 @@ PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 #Run variation partitioning.
 NPPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #Species: 0.31800 #Time: 0.38165 #Species x Time:0.75185
+#####Varpart when non-released replaced by 0s
+#Species: 0.91854 #Time: -0.05818 #Species x Time:0.94454
 
 #Run adonis
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
@@ -618,6 +625,8 @@ PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
 #Run variation partitioning.
 NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #Species: 0.34374 #Time: 0.40226 #Species x Time:0.79137
+#####Varpart when non-released replaced by 0s
+#Species: 0.91629 #Time: -0.06694 #Species x Time:0.94001
 
 #Run adonis
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
