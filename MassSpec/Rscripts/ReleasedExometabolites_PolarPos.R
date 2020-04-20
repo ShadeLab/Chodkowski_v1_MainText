@@ -587,7 +587,7 @@ write.csv(allMSL1.O,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1
 #Export label names
 write.csv(allJGI,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1_Labels.csv",row.names=FALSE)
 
-#####Use PolarPos_JGI_MSL1_IDs.csv to find the top most accumulated exometabolites#####
+#####Use PolarPos_JGI_MSL1_IDs.csv to perform pathway analysis, to find the top most accumulated exometabolites, and to perform ANOVA#####
 
 #Extract released Bt exometabolites from JGI
 Btmetabs <- allJGIreleased[which(allJGIreleased$ID %in% BtFinalIDsPolarPos),]
