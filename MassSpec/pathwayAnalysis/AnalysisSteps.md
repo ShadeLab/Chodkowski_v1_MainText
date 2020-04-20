@@ -2,7 +2,7 @@
 
 This step can be found in the ReleasedExometabolites_PolarPos.R and ReleasedExometabolites_PolarNeg.R scripts
 
-Specifically under the section: #####################Identification of released metabolites#####################
+Specifically under the section: Identification of released metabolites
 ```
 write.csv(allMSL1.O,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1_IDs.csv",row.names=FALSE)
 #Export label names
@@ -13,8 +13,8 @@ write.csv(allJGI,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1_La
 
 Isomers were identified by mass spec analysis. See Supplementary Dataset 3
 
-Removal of isomers generated files
-1)PolarPos_IsomersRemoved.csv
+Removal of isomers generated files: <br />
+1)PolarPos_IsomersRemoved.csv <br />
 2)PolarNeg_IsomersRemoved.csv
 
 Additional editing of files was performed to fit file format for MetaboAnalyst
@@ -25,7 +25,7 @@ Files 1 & 2 from Step 2 were uploaded to MetaboAnalyst
 
 Datasets were normalized by a reference feature(13C-15N-Alanine for Polar Positive and 13C-15N-Proline for Polar Negative) and cubed-root trasnformed.
 
-Normalized datasets were exported to generate files:
+Normalized datasets were exported to generate files: <br />
 
 1) PolarPos_isomersRemoved_normalized.csv  <br />
 2) PolarNeg_isomersRemoved_normalized.csv
@@ -45,12 +45,12 @@ We then quality filtered the dataset to remove exometabolites that were not in t
 
 Finally, we split the datasets by strain so that we could perform pathway analysis on each strain individually.
 
-This generated files:
-1)Bt_pathwayAnalysis_PosModeDuplicates_normalized.csv
-2)Bt_pathwayAnalysis_NegModeDuplicates_normalized.csv
-3)Cv_pathwayAnalysis_PosModeDuplicates_normalized.csv
-4)Cv_pathwayAnalysis_NegModeDuplicates_normalized.csv
-5)Ps_pathwayAnalysis_PosModeDuplicates_normalized.csv
+This generated files: <br />
+1)Bt_pathwayAnalysis_PosModeDuplicates_normalized.csv <br />
+2)Bt_pathwayAnalysis_NegModeDuplicates_normalized.csv <br />
+3)Cv_pathwayAnalysis_PosModeDuplicates_normalized.csv <br />
+4)Cv_pathwayAnalysis_NegModeDuplicates_normalized.csv <br />
+5)Ps_pathwayAnalysis_PosModeDuplicates_normalized.csv <br />
 6)Ps_pathwayAnalysis_NegModeDuplicates_normalized.csv
 
 # Step 6: Upload to MetaboAnalyst and perform pathway analysis.
