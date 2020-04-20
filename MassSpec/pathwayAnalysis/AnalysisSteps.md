@@ -1,4 +1,4 @@
-#Step 1: Obtain and export only L1 exometabolites
+# Step 1: Obtain and export only L1 exometabolites
 
 This step can be found in the ReleasedExometabolites_PolarPos.R and ReleasedExometabolites_PolarNeg.R scripts
 
@@ -9,7 +9,7 @@ write.csv(allMSL1.O,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1
 write.csv(allJGI,"MassSpec/releaseAnalysis/MSMS/outputFiles/PolarPos_JGI_MSL1_Labels.csv",row.names=FALSE)
 ```
 
-#Step 2: Remove isomers
+# Step 2: Remove isomers
 
 Isomers were identified by mass spec analysis. See Supplementary Dataset 3
 
@@ -19,7 +19,7 @@ Removal of isomers generated files
 
 Additional editing of files was performed to fit file format for MetaboAnalyst
 
-#Step 3: Normalize dataset in MetaboAnalyst
+# Step 3: Normalize dataset in MetaboAnalyst
 
 Files 1 & 2 from Step 2 were uploaded to MetaboAnalyst
 
@@ -27,14 +27,14 @@ Datasets were normalized by a reference feature(13C-15N-Alanine for Polar Positi
 
 Normalized datasets were exported to generate files:
 
-1) PolarPos_isomersRemoved_normalized.csv
+1) PolarPos_isomersRemoved_normalized.csv  <br />
 2) PolarNeg_isomersRemoved_normalized.csv
 
-#Step 4: Identify duplicate exometabolites in both ionization modes
+# Step 4: Identify duplicate exometabolites in both ionization modes
 
 See summary in DuplicateExometabolites.xlsx
 
-#Step 5: Combine datasets from both ionization modes, perform QC, split dataset by duplicate compounds, and split dataset by strains
+# Step 5: Combine datasets from both ionization modes, perform QC, split dataset by duplicate compounds, and split dataset by strains
 
 We combined datasets from both ionization modes but split the dataset into two files to account for:
 
@@ -53,6 +53,6 @@ This generated files:
 5)Ps_pathwayAnalysis_PosModeDuplicates_normalized.csv
 6)Ps_pathwayAnalysis_NegModeDuplicates_normalized.csv
 
-#Step 6: Upload to MetaboAnalyst and perform pathway analysis.
+# Step 6: Upload to MetaboAnalyst and perform pathway analysis.
 
 Generated results in Supplementary Dataset 6
