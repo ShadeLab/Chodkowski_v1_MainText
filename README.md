@@ -1,8 +1,8 @@
-#Github repository for
+# Github repository for
 ---
-#Exometabolite dynamics over stationary phase reveal strain-specific responses to nutrient limitation
+# Exometabolite dynamics over stationary phase reveal strain-specific responses to nutrient limitation
 ---
-##By John Chodkowski and Ashley Shade
+## By John Chodkowski and Ashley Shade
 ---
 *This work is under review*
 
