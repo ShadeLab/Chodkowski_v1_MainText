@@ -6,6 +6,9 @@
 ---
 *This work is under review*
 
+## To cite this work or code
+Chodkowski JL and A Shade.  2020.  Exometabolite dynamics over stationary phase reveal strain-specific responses to nutrient limitation.  Submitted.  Preprint:  https://www.biorxiv.org/content/10.1101/2020.06.05.137489v1 
+
 ## Data
 Metabolomics data and transcriptomics data are available at Joint Genomes Institute Portal (https://genome.jgi.doe.gov/portal/) under JGI Proposal ID 502921
 
