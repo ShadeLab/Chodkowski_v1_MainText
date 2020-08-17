@@ -126,7 +126,7 @@ library(dplyr)
 
 #Extract PC1&2 for bio reps
 mod_sample.PCs <- as.data.frame(modScores$sites)
-#Add strains 
+#Add strains
 mod_sample.PCs$Strain <- mDataSplit$X2
 #Add bioreps
 mod_sample.PCs$BR <- mDataSplitTime$X2
@@ -173,6 +173,131 @@ protest(X=PsR2[,1:2],Y=PsR3[,1:2])
 protest(X=PsR2[,1:2],Y=PsR4[,1:2])
 protest(X=PsR3[,1:2],Y=PsR4[,1:2])
 
+#####Perform MVS
+#Read in normalized data from Metaboanalyst
+dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarPos_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
+
+#Remove first row
+dataNorm.edit <- dataNorm[-1,]
+
+#Obtain exometabolite IDs for each strain
+BtFinalIDsPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/BtFinalIDsPolarPos.rds")
+CvFinalIDsPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/CvFinalIDsPolarPos.rds")
+PsFinalIDsPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalIDsPolarPos.rds")
+
+#Read in and filter pre-normalized exometabolite table
+exoMetabolome <- read.csv("MassSpec/releaseAnalysis/MS/initialFiles/MZminePolarPosMonoculture.csv",check.names=F)
+
+finalFeatsJGI <- unique(c(BtFinalIDsPolarPos,CvFinalIDsPolarPos,PsFinalIDsPolarPos))
+#Remove NA
+finalFeatsJGI <- finalFeatsJGI[!is.na(finalFeatsJGI)]
+
+#Create CSV for all secreted exometabolites
+exoMetabolomeReleased <- exoMetabolome[c(which(exoMetabolome$ID %in% unique(finalFeatsJGI))),]
+
+#Match IDs to row number
+Btrows <- which(exoMetabolomeReleased$ID %in% BtFinalIDsPolarPos)
+Cvrows <- which(exoMetabolomeReleased$ID %in% CvFinalIDsPolarPos)
+Psrows <- which(exoMetabolomeReleased$ID %in% PsFinalIDsPolarPos)
+
+#Extract rows and columns of interest for each strain
+dataNorm.edit.Bt <- dataNorm.edit[Btrows,1:23]
+dataNorm.edit.Cv <- dataNorm.edit[Cvrows,24:47]
+dataNorm.edit.Ps <- dataNorm.edit[Psrows,48:71]
+
+#Convert characters to numeric
+dataNorm.edit.Bt <- as.data.frame(lapply(dataNorm.edit.Bt, as.numeric))
+dataNorm.edit.Cv <- as.data.frame(lapply(dataNorm.edit.Cv, as.numeric))
+dataNorm.edit.Ps <- as.data.frame(lapply(dataNorm.edit.Ps, as.numeric))
+
+#Transpose
+dataNormt.Bt <- t(dataNorm.edit.Bt)
+dataNormt.Cv <- t(dataNorm.edit.Cv)
+dataNormt.Ps <- t(dataNorm.edit.Ps)
+
+#Load vegan
+library(vegan)
+dist.Metab.Bt <- vegdist(dataNormt.Bt, method="bray")
+dist.Metab.Cv <- vegdist(dataNormt.Cv, method="bray")
+dist.Metab.Ps <- vegdist(dataNormt.Ps, method="bray")
+
+#Extract metaData for each strain
+metaD.Bt <- metaD[1:23,]
+metaD.Cv <- metaD[24:47,]
+metaD.Ps <- metaD[48:71,]
+
+#Calculate betadisper
+mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
+mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
+mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Calculate distances between groups centroids
+library(usedist)
+
+#distances between groups centroids all compared to the initial time point
+Bt.dist.25toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_25hr.1","X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"))
+Bt.dist.30toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"))
+Cv.dist.30toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_25hr.1","X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"))
+Ps.dist.30toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_45hr.1","X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
+
+#distances between groups centroids in a timestep manner
+Bt.dist.25toInt <- Bt.dist.25toInt
+Bt.dist.30to25 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_25hr.1","X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"),
+  c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35to30 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"),
+  c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40to35 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45to40 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- Cv.dist.25toInt
+Cv.dist.30to25 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35to30 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40to35 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45to40 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- Ps.dist.25toInt
+Ps.dist.30to25 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_25hr.1","X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"),
+  c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35to30 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"),
+  c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40to35 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"),
+  c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45to40 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"),
+  c("X1mem_Ps_45hr.1","X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
 
 
 #####Polar Neg#####
@@ -300,7 +425,7 @@ library(dplyr)
 
 #Extract PC1&2 for bio reps
 mod_sample.PCs <- as.data.frame(modScores$sites)
-#Add strains 
+#Add strains
 mod_sample.PCs$Strain <- mDataSplit$X2
 #Add bioreps
 mod_sample.PCs$BR <- mDataSplitTime$X2
@@ -346,6 +471,132 @@ protest(X=PsR1[,1:2],Y=PsR4[,1:2])
 protest(X=PsR2[,1:2],Y=PsR3[,1:2])
 protest(X=PsR2[,1:2],Y=PsR4[,1:2])
 protest(X=PsR3[,1:2],Y=PsR4[,1:2])
+
+#####Perform MVS
+#Read in normalized data from Metaboanalyst
+dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/PolarNeg_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
+
+#Remove first row
+dataNorm.edit <- dataNorm[-1,]
+
+#Obtain exometabolite IDs for each strain
+BtFinalIDsPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/BtFinalIDsPolarNeg.rds")
+CvFinalIDsPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/CvFinalIDsPolarNeg.rds")
+PsFinalIDsPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalIDsPolarNeg.rds")
+
+#Read in and filter pre-normalized exometabolite table
+exoMetabolome <- read.csv("MassSpec/releaseAnalysis/MS/initialFiles/MZminePolarNegMonoculture.csv",check.names=F)
+
+finalFeatsJGI <- unique(c(BtFinalIDsPolarNeg,CvFinalIDsPolarNeg,PsFinalIDsPolarNeg))
+#Remove NA
+finalFeatsJGI <- finalFeatsJGI[!is.na(finalFeatsJGI)]
+
+#Create CSV for all secreted exometabolites
+exoMetabolomeReleased <- exoMetabolome[c(which(exoMetabolome$ID %in% unique(finalFeatsJGI))),]
+
+#Match IDs to row number
+Btrows <- which(exoMetabolomeReleased$ID %in% BtFinalIDsPolarNeg)
+Cvrows <- which(exoMetabolomeReleased$ID %in% CvFinalIDsPolarNeg)
+Psrows <- which(exoMetabolomeReleased$ID %in% PsFinalIDsPolarNeg)
+
+#Extract rows and columns of interest for each strain
+dataNorm.edit.Bt <- dataNorm.edit[Btrows,1:23]
+dataNorm.edit.Cv <- dataNorm.edit[Cvrows,24:47]
+dataNorm.edit.Ps <- dataNorm.edit[Psrows,48:71]
+
+#Convert characters to numeric
+dataNorm.edit.Bt <- as.data.frame(lapply(dataNorm.edit.Bt, as.numeric))
+dataNorm.edit.Cv <- as.data.frame(lapply(dataNorm.edit.Cv, as.numeric))
+dataNorm.edit.Ps <- as.data.frame(lapply(dataNorm.edit.Ps, as.numeric))
+
+#Transpose
+dataNormt.Bt <- t(dataNorm.edit.Bt)
+dataNormt.Cv <- t(dataNorm.edit.Cv)
+dataNormt.Ps <- t(dataNorm.edit.Ps)
+
+#Load vegan
+library(vegan)
+dist.Metab.Bt <- vegdist(dataNormt.Bt, method="bray")
+dist.Metab.Cv <- vegdist(dataNormt.Cv, method="bray")
+dist.Metab.Ps <- vegdist(dataNormt.Ps, method="bray")
+
+#Extract metaData for each strain
+metaD.Bt <- metaD[1:23,]
+metaD.Cv <- metaD[24:47,]
+metaD.Ps <- metaD[48:71,]
+
+#Calculate betadisper
+mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
+mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
+mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Calculate distances between groups centroids
+library(usedist)
+
+#distances between groups centroids all compared to the initial time point
+Bt.dist.25toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_25hr.1","X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"))
+Bt.dist.30toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.1","X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"))
+Cv.dist.30toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.1","X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_25hr.1","X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"))
+Ps.dist.30toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.1","X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3","X1mem_Ps_12pt5hr.4"),
+  c("X1mem_Ps_45hr.1","X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
+
+#distances between groups centroids in a timestep manner
+Bt.dist.25toInt <- Bt.dist.25toInt
+Bt.dist.30to25 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_25hr.1","X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"),
+  c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35to30 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_30hr.1","X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"),
+  c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40to35 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_35hr.1","X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45to40 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- Cv.dist.25toInt
+Cv.dist.30to25 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35to30 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40to35 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45to40 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- Ps.dist.25toInt
+Ps.dist.30to25 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_25hr.1","X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"),
+  c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35to30 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_30hr.1","X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"),
+  c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40to35 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_35hr.1","X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"),
+  c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45to40 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_40hr.1","X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"),
+  c("X1mem_Ps_45hr.1","X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
 
 
 
@@ -475,7 +726,7 @@ library(dplyr)
 
 #Extract PC1&2 for bio reps
 mod_sample.PCs <- as.data.frame(modScores$sites)
-#Add strains 
+#Add strains
 mod_sample.PCs$Strain <- mDataSplit$X2
 #Add bioreps
 mod_sample.PCs$BR <- mDataSplitTime$X2
@@ -515,6 +766,132 @@ protest(X=CvR3[,1:2],Y=CvR4[,1:2])
 protest(X=PsR2[,1:2],Y=PsR3[,1:2])
 protest(X=PsR2[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
 protest(X=PsR3[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
+
+#####Perform MVS
+#Read in normalized data from Metaboanalyst
+dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarPos_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
+
+#Remove first row
+dataNorm.edit <- dataNorm[-1,]
+
+#Obtain exometabolite IDs for each strain
+BtFinalIDsNonPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/BtFinalIDsNonPolarPos.rds")
+CvFinalIDsNonPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/CvFinalIDsNonPolarPos.rds")
+PsFinalIDsNonPolarPos <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalIDsNonPolarPos.rds")
+
+#Read in and filter pre-normalized exometabolite table
+exoMetabolome <- read.csv("MassSpec/releaseAnalysis/MS/initialFiles/MZmineNonPolarPosMonoculture.csv",check.names=F)
+
+finalFeatsJGI <- unique(c(BtFinalIDsNonPolarPos,CvFinalIDsNonPolarPos,PsFinalIDsNonPolarPos))
+#Remove NA
+finalFeatsJGI <- finalFeatsJGI[!is.na(finalFeatsJGI)]
+
+#Create CSV for all secreted exometabolites
+exoMetabolomeReleased <- exoMetabolome[c(which(exoMetabolome$ID %in% unique(finalFeatsJGI))),]
+
+#Match IDs to row number
+Btrows <- which(exoMetabolomeReleased$ID %in% BtFinalIDsNonPolarPos)
+Cvrows <- which(exoMetabolomeReleased$ID %in% CvFinalIDsNonPolarPos)
+Psrows <- which(exoMetabolomeReleased$ID %in% PsFinalIDsNonPolarPos)
+
+#Extract rows and columns of interest for each strain
+dataNorm.edit.Bt <- dataNorm.edit[Btrows,1:19]
+dataNorm.edit.Cv <- dataNorm.edit[Cvrows,20:42]
+dataNorm.edit.Ps <- dataNorm.edit[Psrows,43:59]
+
+#Convert characters to numeric
+dataNorm.edit.Bt <- as.data.frame(lapply(dataNorm.edit.Bt, as.numeric))
+dataNorm.edit.Cv <- as.data.frame(lapply(dataNorm.edit.Cv, as.numeric))
+dataNorm.edit.Ps <- as.data.frame(lapply(dataNorm.edit.Ps, as.numeric))
+
+#Transpose
+dataNormt.Bt <- t(dataNorm.edit.Bt)
+dataNormt.Cv <- t(dataNorm.edit.Cv)
+dataNormt.Ps <- t(dataNorm.edit.Ps)
+
+#Load vegan
+library(vegan)
+dist.Metab.Bt <- vegdist(dataNormt.Bt, method="bray")
+dist.Metab.Cv <- vegdist(dataNormt.Cv, method="bray")
+dist.Metab.Ps <- vegdist(dataNormt.Ps, method="bray")
+
+#Extract metaData for each strain
+metaD.Bt <- metaD[1:19,]
+metaD.Cv <- metaD[20:42,]
+metaD.Ps <- metaD[43:59,]
+
+#Calculate betadisper
+mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
+mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
+mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Calculate distances between groups centroids
+library(usedist)
+
+#distances between groups centroids all compared to the initial time point
+Bt.dist.25toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"))
+Bt.dist.30toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"))
+Cv.dist.30toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"))
+Ps.dist.30toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
+
+#distances between groups centroids in a timestep manner
+Bt.dist.25toInt <- Bt.dist.25toInt
+Bt.dist.30to25 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"),
+  c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35to30 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"),
+  c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40to35 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"),
+  c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45to40 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_40hr.1","X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"),
+  c("X1mem_Bt_45hr.1","X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- Cv.dist.25toInt
+Cv.dist.30to25 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_25hr.1","X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35to30 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40to35 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"),
+  c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45to40 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_40hr.1","X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"),
+  c("X1mem_Cv_45hr.1","X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- Ps.dist.25toInt
+Ps.dist.30to25 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"),
+  c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35to30 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"),
+  c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40to35 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"),
+  c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45to40 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"),
+  c("X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
 
 
 
@@ -644,7 +1021,7 @@ library(dplyr)
 
 #Extract PC1&2 for bio reps
 mod_sample.PCs <- as.data.frame(modScores$sites)
-#Add strains 
+#Add strains
 mod_sample.PCs$Strain <- mDataSplit$X2
 #Add bioreps
 mod_sample.PCs$BR <- mDataSplitTime$X2
@@ -681,6 +1058,132 @@ protest(X=CvR3[,1:2],Y=CvR4[,1:2])
 protest(X=PsR2[,1:2],Y=PsR3[,1:2])
 protest(X=PsR2[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
 protest(X=PsR3[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
+
+#####Perform MVS
+#Read in normalized data from Metaboanalyst
+dataNorm <- read.csv("MassSpec/releaseAnalysis/MS/outputFiles/manualEdits/NonPolarNeg_allReleased_IndSamples_MetaboanalystNormalization.csv",header=TRUE,row.names=1,stringsAsFactors=FALSE)
+
+#Remove first row
+dataNorm.edit <- dataNorm[-1,]
+
+#Obtain exometabolite IDs for each strain
+BtFinalIDsNonPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/BtFinalIDsNonPolarNeg.rds")
+CvFinalIDsNonPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/CvFinalIDsNonPolarNeg.rds")
+PsFinalIDsNonPolarNeg <- readRDS("MassSpec/releaseAnalysis/MS/outputFiles/PsFinalIDsNonPolarNeg.rds")
+
+#Read in and filter pre-normalized exometabolite table
+exoMetabolome <- read.csv("MassSpec/releaseAnalysis/MS/initialFiles/MZmineNonPolarNegMonoculture.csv",check.names=F)
+
+finalFeatsJGI <- unique(c(BtFinalIDsNonPolarNeg,CvFinalIDsNonPolarNeg,PsFinalIDsNonPolarNeg))
+#Remove NA
+finalFeatsJGI <- finalFeatsJGI[!is.na(finalFeatsJGI)]
+
+#Create CSV for all secreted exometabolites
+exoMetabolomeReleased <- exoMetabolome[c(which(exoMetabolome$ID %in% unique(finalFeatsJGI))),]
+
+#Match IDs to row number
+Btrows <- which(exoMetabolomeReleased$ID %in% BtFinalIDsNonPolarNeg)
+Cvrows <- which(exoMetabolomeReleased$ID %in% CvFinalIDsNonPolarNeg)
+Psrows <- which(exoMetabolomeReleased$ID %in% PsFinalIDsNonPolarNeg)
+
+#Extract rows and columns of interest for each strain
+dataNorm.edit.Bt <- dataNorm.edit[Btrows,1:17]
+dataNorm.edit.Cv <- dataNorm.edit[Cvrows,18:37]
+dataNorm.edit.Ps <- dataNorm.edit[Psrows,38:54]
+
+#Convert characters to numeric
+dataNorm.edit.Bt <- as.data.frame(lapply(dataNorm.edit.Bt, as.numeric))
+dataNorm.edit.Cv <- as.data.frame(lapply(dataNorm.edit.Cv, as.numeric))
+dataNorm.edit.Ps <- as.data.frame(lapply(dataNorm.edit.Ps, as.numeric))
+
+#Transpose
+dataNormt.Bt <- t(dataNorm.edit.Bt)
+dataNormt.Cv <- t(dataNorm.edit.Cv)
+dataNormt.Ps <- t(dataNorm.edit.Ps)
+
+#Load vegan
+library(vegan)
+dist.Metab.Bt <- vegdist(dataNormt.Bt, method="bray")
+dist.Metab.Cv <- vegdist(dataNormt.Cv, method="bray")
+dist.Metab.Ps <- vegdist(dataNormt.Ps, method="bray")
+
+#Extract metaData for each strain
+metaD.Bt <- metaD[1:17,]
+metaD.Cv <- metaD[18:37,]
+metaD.Ps <- metaD[38:54,]
+
+#Calculate betadisper
+mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
+mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
+mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Calculate distances between groups centroids
+library(usedist)
+
+#distances between groups centroids all compared to the initial time point
+Bt.dist.25toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"))
+Bt.dist.30toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45toInt <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_12pt5hr.2","X1mem_Bt_12pt5hr.3","X1mem_Bt_12pt5hr.4"),
+  c("X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"))
+Cv.dist.30toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45toInt <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_12pt5hr.2","X1mem_Cv_12pt5hr.3","X1mem_Cv_12pt5hr.4"),
+  c("X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"))
+Ps.dist.30toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45toInt <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_12pt5hr.2","X1mem_Ps_12pt5hr.3"),
+  c("X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
+
+#distances between groups centroids in a timestep manner
+Bt.dist.25toInt <- Bt.dist.25toInt
+Bt.dist.30to25 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_25hr.2","X1mem_Bt_25hr.3","X1mem_Bt_25hr.4"),
+  c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"))
+Bt.dist.35to30 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_30hr.2","X1mem_Bt_30hr.3","X1mem_Bt_30hr.4"),
+  c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"))
+Bt.dist.40to35 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_35hr.2","X1mem_Bt_35hr.3","X1mem_Bt_35hr.4"),
+  c("X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"))
+Bt.dist.45to40 <- dist_between_centroids(dist.Metab.Bt,c("X1mem_Bt_40hr.2","X1mem_Bt_40hr.3","X1mem_Bt_40hr.4"),
+  c("X1mem_Bt_45hr.2","X1mem_Bt_45hr.3"))
+
+Cv.dist.25toInt <- Cv.dist.25toInt
+Cv.dist.30to25 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_25hr.2","X1mem_Cv_25hr.3","X1mem_Cv_25hr.4"),
+  c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"))
+Cv.dist.35to30 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_30hr.1","X1mem_Cv_30hr.2","X1mem_Cv_30hr.3","X1mem_Cv_30hr.4"),
+  c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"))
+Cv.dist.40to35 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_35hr.1","X1mem_Cv_35hr.2","X1mem_Cv_35hr.3","X1mem_Cv_35hr.4"),
+  c("X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"))
+Cv.dist.45to40 <- dist_between_centroids(dist.Metab.Cv,c("X1mem_Cv_40hr.2","X1mem_Cv_40hr.3","X1mem_Cv_40hr.4"),
+  c("X1mem_Cv_45hr.2","X1mem_Cv_45hr.3","X1mem_Cv_45hr.4"))
+
+Ps.dist.25toInt <- Ps.dist.25toInt
+Ps.dist.30to25 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_25hr.2","X1mem_Ps_25hr.3","X1mem_Ps_25hr.4"),
+  c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"))
+Ps.dist.35to30 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_30hr.2","X1mem_Ps_30hr.3","X1mem_Ps_30hr.4"),
+  c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"))
+Ps.dist.40to35 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_35hr.2","X1mem_Ps_35hr.3","X1mem_Ps_35hr.4"),
+  c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"))
+Ps.dist.45to40 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_40hr.2","X1mem_Ps_40hr.3","X1mem_Ps_40hr.4"),
+  c("X1mem_Ps_45hr.2","X1mem_Ps_45hr.3","X1mem_Ps_45hr.4"))
 
 
 
