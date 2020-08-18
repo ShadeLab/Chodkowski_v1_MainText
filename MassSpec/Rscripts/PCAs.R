@@ -13,7 +13,7 @@ dataNorm.edit <- dataNorm[-1,]
 
 #Convert indicies of interest to NAs. These features did not pass release criteria for particular strains.
 for(i in 1:nrow(NA_Index)){
-dataNorm.edit[NA_Index$row[i],NA_Index$col[i]] <- NA
+dataNorm.edit[NA_Index$row[i],NA_Index$col[i]] <- 0
 }
 
 #Create metaData from column headers
@@ -354,6 +354,7 @@ PC2var <- mod$eig[2]/sum(mod$eig) #Checks out
 #Extract scores
 
 modScores <- scores(mod)
+
 #Extract centroid
 centroids <- as.data.frame(modScores$centroids)
 #Extract species and time info
@@ -655,6 +656,7 @@ PC2var <- mod$eig[2]/sum(mod$eig) #Checks out
 #Extract scores
 
 modScores <- scores(mod)
+
 #Extract centroid
 centroids <- as.data.frame(modScores$centroids)
 #Extract species and time info
@@ -950,6 +952,7 @@ PC2var <- mod$eig[2]/sum(mod$eig) #Checks out
 #Extract scores
 
 modScores <- scores(mod)
+
 #Extract centroid
 centroids <- as.data.frame(modScores$centroids)
 #Extract species and time info
