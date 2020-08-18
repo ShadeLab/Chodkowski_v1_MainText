@@ -13,7 +13,7 @@ dataNorm.edit <- dataNorm[-1,]
 
 #Convert indicies of interest to NAs. These features did not pass release criteria for particular strains.
 for(i in 1:nrow(NA_Index)){
-dataNorm.edit[NA_Index$row[i],NA_Index$col[i]] <- 0
+dataNorm.edit[NA_Index$row[i],NA_Index$col[i]] <- NA
 }
 
 #Create metaData from column headers
