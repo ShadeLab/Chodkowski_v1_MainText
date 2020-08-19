@@ -38,12 +38,13 @@ dataNorm.edit <- as.data.frame(lapply(dataNorm.edit, as.numeric))
 
 #Transpose
 dataNormt <- t(dataNorm.edit)
+colnames(dataNormt) <- rownames(dataNorm.edit) #newly added
 
 #Load vegan
 library(vegan)
 dist.Metab <- vegdist(dataNormt, method="bray")
 
-#Creat groups
+#Create groups
 groups <- c(metaD$Group)
 #Calculate betadisper
 mod <- betadisper(dist.Metab, groups)
@@ -116,9 +117,9 @@ rownames(condI) <- rownames(dataNormt)
 adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
 
 #Perform pairwise adonis post-hoc
-library(pairwiseAdonis)
+library("RVAideMemoire")
 #condI <- unite(condI, newcol, c(Condition, Time), remove=FALSE)
-pairwise.adonis(dist.Metab,condI$Cond)
+pairwise.perm.manova(dist.Metab,condI$Cond,nperm=999,p.method="fdr")
 
 #####Perform Protest#####
 library(vegan)
@@ -230,6 +231,29 @@ metaD.Ps <- metaD[48:71,]
 mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Prep for repeated measures anova
+metaD.Bt.df <- data.frame(Time=metaD.Bt)
+metaD.Cv.df <- data.frame(Time=metaD.Cv)
+metaD.Ps.df <- data.frame(Time=metaD.Ps)
+
+#Test for homogeneity of multivariate dispersions
+permutest(mod.Bt)
+permutest(mod.Cv)
+permutest(mod.Ps)
+
+#Null is not rejected for any strain
+
+#Run permutational anova
+Bt.permAnova <- adonis2(formula = dist.Metab.Bt ~ Time, data = metaD.Bt.df, permutations = 999, method = "bray")
+Cv.permAnova <- adonis2(formula = dist.Metab.Cv ~ Time, data = metaD.Cv.df, permutations = 999, method = "bray")
+Ps.permAnova <- adonis2(formula = dist.Metab.Ps ~ Time, data = metaD.Ps.df, permutations = 999, method = "bray")
+
+library("RVAideMemoire")
+pairwise.perm.manova(dist.Metab.Bt,metaD.Bt.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Cv,metaD.Cv.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Ps,metaD.Ps.df$Time,nperm=999,p.method="fdr")
+
 
 #Calculate distances between groups centroids
 library(usedist)
@@ -416,9 +440,9 @@ rownames(condI) <- rownames(dataNormt)
 adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
 
 #Perform pairwise adonis post-hoc
-library(pairwiseAdonis)
+library("RVAideMemoire")
 #condI <- unite(condI, newcol, c(Condition, Time), remove=FALSE)
-pairwise.adonis(dist.Metab,condI$Cond)
+pairwise.perm.manova(dist.Metab,condI$Cond,nperm=999,p.method="fdr")
 
 #####Perform Protest#####
 library(vegan)
@@ -530,6 +554,28 @@ metaD.Ps <- metaD[48:71,]
 mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Prep for repeated measures anova
+metaD.Bt.df <- data.frame(Time=metaD.Bt)
+metaD.Cv.df <- data.frame(Time=metaD.Cv)
+metaD.Ps.df <- data.frame(Time=metaD.Ps)
+
+#Test for homogeneity of multivariate dispersions
+permutest(mod.Bt)
+permutest(mod.Cv)
+permutest(mod.Ps)
+
+#Null is not rejected for any strain
+
+#Run permutational anova
+Bt.permAnova <- adonis2(formula = dist.Metab.Bt ~ Time, data = metaD.Bt.df, permutations = 999, method = "bray")
+Cv.permAnova <- adonis2(formula = dist.Metab.Cv ~ Time, data = metaD.Cv.df, permutations = 999, method = "bray")
+Ps.permAnova <- adonis2(formula = dist.Metab.Ps ~ Time, data = metaD.Ps.df, permutations = 999, method = "bray")
+
+library("RVAideMemoire")
+pairwise.perm.manova(dist.Metab.Bt,metaD.Bt.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Cv,metaD.Cv.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Ps,metaD.Ps.df$Time,nperm=999,p.method="fdr")
 
 #Calculate distances between groups centroids
 library(usedist)
@@ -718,9 +764,9 @@ rownames(condI) <- rownames(dataNormt)
 adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
 
 #Perform pairwise adonis post-hoc
-library(pairwiseAdonis)
+library("RVAideMemoire")
 #condI <- unite(condI, newcol, c(Condition, Time), remove=FALSE)
-pairwise.adonis(dist.Metab,condI$Cond)
+pairwise.perm.manova(dist.Metab,condI$Cond,nperm=999,p.method="fdr")
 
 #####Perform Protest#####
 library(vegan)
@@ -826,6 +872,28 @@ metaD.Ps <- metaD[43:59,]
 mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Prep for repeated measures anova
+metaD.Bt.df <- data.frame(Time=metaD.Bt)
+metaD.Cv.df <- data.frame(Time=metaD.Cv)
+metaD.Ps.df <- data.frame(Time=metaD.Ps)
+
+#Test for homogeneity of multivariate dispersions
+permutest(mod.Bt)
+permutest(mod.Cv)
+permutest(mod.Ps)
+
+#Null is not rejected for any strain
+
+#Run permutational anova
+Bt.permAnova <- adonis2(formula = dist.Metab.Bt ~ Time, data = metaD.Bt.df, permutations = 999, method = "bray")
+Cv.permAnova <- adonis2(formula = dist.Metab.Cv ~ Time, data = metaD.Cv.df, permutations = 999, method = "bray")
+Ps.permAnova <- adonis2(formula = dist.Metab.Ps ~ Time, data = metaD.Ps.df, permutations = 999, method = "bray")
+
+library("RVAideMemoire")
+pairwise.perm.manova(dist.Metab.Bt,metaD.Bt.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Cv,metaD.Cv.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Ps,metaD.Ps.df$Time,nperm=999,p.method="fdr")
 
 #Calculate distances between groups centroids
 library(usedist)
@@ -1014,9 +1082,9 @@ rownames(condI) <- rownames(dataNormt)
 adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
 
 #Perform pairwise adonis post-hoc
-library(pairwiseAdonis)
+library("RVAideMemoire")
 #condI <- unite(condI, newcol, c(Condition, Time), remove=FALSE)
-pairwise.adonis(dist.Metab,condI$Cond)
+pairwise.perm.manova(dist.Metab,condI$Cond,nperm=999,p.method="fdr")
 
 #####Perform Protest#####
 library(vegan)
@@ -1119,6 +1187,28 @@ metaD.Ps <- metaD[38:54,]
 mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Prep for repeated measures anova
+metaD.Bt.df <- data.frame(Time=metaD.Bt)
+metaD.Cv.df <- data.frame(Time=metaD.Cv)
+metaD.Ps.df <- data.frame(Time=metaD.Ps)
+
+#Test for homogeneity of multivariate dispersions
+permutest(mod.Bt)
+permutest(mod.Cv)
+permutest(mod.Ps)
+
+#Null is not rejected for any strain
+
+#Run permutational anova
+Bt.permAnova <- adonis2(formula = dist.Metab.Bt ~ Time, data = metaD.Bt.df, permutations = 999, method = "bray")
+Cv.permAnova <- adonis2(formula = dist.Metab.Cv ~ Time, data = metaD.Cv.df, permutations = 999, method = "bray")
+Ps.permAnova <- adonis2(formula = dist.Metab.Ps ~ Time, data = metaD.Ps.df, permutations = 999, method = "bray")
+
+library("RVAideMemoire")
+pairwise.perm.manova(dist.Metab.Bt,metaD.Bt.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Cv,metaD.Cv.df$Time,nperm=999,p.method="fdr")
+pairwise.perm.manova(dist.Metab.Ps,metaD.Ps.df$Time,nperm=999,p.method="fdr")
 
 #Calculate distances between groups centroids
 library(usedist)
