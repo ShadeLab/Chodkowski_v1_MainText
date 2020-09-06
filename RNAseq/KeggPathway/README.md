@@ -6,4 +6,4 @@ For each strain, log2-fold change (LFC) values were calculated by comparing tran
 
 These LFC changes were then mapped onto KEGG pathways using the pathview package in R.
 
-To view KEGG pathways of interest, navigate into the strain directories and open the .png files. 
+To view KEGG pathways of interest, navigate back to the KeggPathway directory and then into the strain directories to view the .png files. 
