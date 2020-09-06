@@ -99,11 +99,9 @@ allLevelsCat <- allLevelsSum %>% top_n(10)
 AllLevelsT10 <- AllLevels[which(AllLevels$Var1 %in% allLevelsCat$Var1),]
 
 #Order bars
-AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("Azoles", "Fatty Acyls", "Organonitrogen compounds",
-                      "Organooxygen compounds", "Carboxylic acids and derivatives","Pyridines and derivatives",
-                      "Purine nucleosides","Imidazopyrimidines",
-                      "Benzene and substituted derivatives","Diazines"))
-
+AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("Pyridines and derivatives", "Purine nucleosides",
+                      "Organooxygen compounds", "Organonitrogen compounds", "Imidazopyrimidines", "Fatty Acyls",
+                      "Diazines", "Carboxylic acids and derivatives", "Benzene and substituted derivatives", "Azoles"))
 
 #Plot
 library(ggplot2)
@@ -112,13 +110,13 @@ library(ggplot2)
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73")
 
 plot_class <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
-       geom_bar(position=position_dodge2(preserve = 'single'),stat="identity") +
-       scale_fill_manual(values=cbPalette)
+       geom_bar(position="stack",stat="identity") +
+       scale_fill_manual(values=cbPalette) + coord_flip() + theme(legend.position="none")
 
-plots_ClassLevel <- plot_class + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1,size=12),axis.title.x = element_blank(),axis.text.y = element_text(size=12),
-  axis.title.y = element_text(size=16),legend.title=element_text(size=16),legend.text = element_text(size = 16),
-  strip.text.y = element_text(size=16))
+plots_ClassLevel <- plot_class + facet_grid(rows = vars(org)) + labs(y="Frequency",fill="Identification Confidence") +
+  theme(axis.text.x = element_text(size=12),axis.text.y = element_text(size=12), axis.title.y = element_blank(),
+  axis.title.x = element_blank(),legend.title=element_text(size=12),legend.text = element_text(size = 12),
+  strip.text.y = element_text(size=12)) + scale_y_continuous(breaks=seq(0,60,10))
 
 #ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_ClassLevel_allPolaritiesAndIonsCombined.eps",plot=plots,device="eps",width=30, height=10,units="cm",dpi=600)
 
@@ -236,24 +234,27 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73")
 
 #Order bars
 
-AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("Peptides", "Alpha amino acids", "Purine nucleosides",
-                      "Medium-chain fatty acids", "Dipeptides","Hydroxypyrimidines","Hydroxybenzoic acid derivatives","N-acyl-alpha amino acids and derivatives",
-                      "N-acyl-alpha amino acids","6-alkylaminopurines"))
+AllLevelsT10$Var1 <- factor(AllLevelsT10$Var1,levels = c("6-alkylaminopurines", "Purine nucleosides", "Peptides",
+                            "N-acyl-alpha amino acids and derivatives", "N-acyl-alpha amino acids", "Medium-chain fatty acids",
+                            "Hydroxypyrimidines", "Hydroxybenzoic acid derivatives", "Dipeptides","Alpha amino acids"))
 
 plot_parent <- ggplot(AllLevelsT10, aes(x=Var1, y=as.numeric(Freq), fill=level)) +
-       geom_bar(position=position_dodge2(preserve = 'single'),stat="identity") +
-       scale_fill_manual(values=cbPalette) + theme(legend.position="none")
+       geom_bar(position="stack",stat="identity") +
+       scale_fill_manual(values=cbPalette) + coord_flip() + theme(legend.position="none")
 
-plots_DirectParent <- plot_parent + facet_grid(rows = vars(org)) + labs(y = "Frequency",fill="Identification Confidence") +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1,size=12),axis.title.x = element_blank(),axis.text.y = element_text(size=12),
-      axis.title.y = element_text(size=16),strip.text.y = element_text(size=16))
+plots_DirectParent <- plot_parent + facet_grid(rows = vars(org)) + labs(y="Frequency",fill="Identification Confidence") +
+      theme(axis.text.x = element_text(size=12),axis.text.y = element_text(size=12), axis.title.y = element_blank(),
+      axis.title.x = element_text(size = 12),legend.title=element_text(size=12),legend.text = element_text(size = 12),
+      strip.text.y = element_text(size=12)) + scale_y_continuous(breaks=seq(0,20,2))
 
 #ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_DirectParentLevel_allPolaritiesAndIonsCombined.tif",plot=plots,device="tiff",width=30, units="cm",dpi=600)
+ggsave("/mnt/scratch/chodkows/CLASSYFIRE_DirectParentLevel_allPolaritiesAndIonsCombined.eps",plot=plots_DirectParent,device="eps",width=6.8,height=9, units="in",dpi=600)
 
 
 
 #Combine plots
-library(patchwork)
-plot_ClassyFire <- plots_ClassLevel / plots_DirectParent + plot_annotation(tag_levels = 'A')
+#library(patchwork)
+plot_ClassyFire <- plots_ClassLevel / plots_DirectParent + plot_annotation(tag_levels = 'A') & theme(plot.tag = element_text(size = 20))
 
-ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_allPolaritiesAndIonsCombined.eps",plot=plot_ClassyFire,device="eps",width=20, height=30, units="cm",dpi=600)
+#ggsave("/mnt/research/ShadeLab/Chodkowski/JGI_SynCom/Isolate_ExoMetabolitesDynamicsIn_SP/Figures/Fig3/CLASSYFIRE_allPolaritiesAndIonsCombined.eps",plot=plot_ClassyFire,device="eps",width=20, height=30, units="cm",dpi=600)
+ggsave("/mnt/scratch/chodkows/CLASSYFIRE_allPolaritiesAndIonsCombined.eps",plot=plot_ClassyFire,device="eps",width=6.8,height=16,dpi=600)

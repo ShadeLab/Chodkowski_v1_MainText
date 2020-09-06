@@ -88,21 +88,25 @@ library(ggplot2)
 #Change time from factor to numeric
 centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
 
+library(viridis)
+
 PCA_PolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
-  geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  #coord_fixed()+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
+  geom_point(aes(shape= factor(Label),color=factor(Time)),size=5)+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
-  scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(2,3.5,5,7,9,12))+
-  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
+  scale_color_gradientn(colours = viridis(6)) +
+  scale_color_viridis(discrete=TRUE) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 5)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 5)) +
-  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 18),legend.title=element_text(size=20))
+  theme_bw()+
+  theme(legend.position="none",axis.title = element_text(size = 24),axis.text = element_text(size = 20),
+    legend.title=element_text(size=22))
+
+PCA_PolarPosFinal <- PCA_PolarPos +
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1),size=0.1,colour="black")
 
 #Run variation partitioning.
 PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -111,10 +115,11 @@ PPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #####Varpart when non-released replaced by 0s
 #Species: 0.89178 #Time: -0.03724 #Species x Time:0.92299
 
-#Run adonis
+#Run adonis- Ignore time for now.
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
 rownames(condI) <- rownames(dataNormt)
-adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
+adonis(dist.Metab ~ Condition, data=condI,permutations=999)
+#Strain-specific exometabolite composition differs (even without taking into account time)
 
 #Perform pairwise adonis post-hoc
 library("RVAideMemoire")
@@ -412,21 +417,25 @@ library(ggplot2)
 #Change time from factor to numeric
 centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
 
+library(viridis)
+
 PCA_PolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
-  geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  #coord_fixed()+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
+  geom_point(aes(shape= factor(Label),color=factor(Time)),size=5)+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
-  scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(2,3.5,5,7,9,12))+
-  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
+  scale_color_gradientn(colours = viridis(6)) +
+  scale_color_viridis(discrete=TRUE) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 5)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 5)) +
-  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 18),legend.title=element_text(size=20))
+  theme_bw()+
+  theme(legend.position="none",axis.title = element_text(size = 24),axis.text = element_text(size = 20),
+    legend.title=element_text(size=22))
+
+PCA_PolarNegFinal <- PCA_PolarNeg +
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1),size=0.1,colour="black")
 
 #Run variation partitioning.
 PNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -434,10 +443,11 @@ PNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #####Varpart when non-released replaced by 0s
 #Species: 0.88964 #Time: -0.04022 #Species x Time:0.91744
 
-#Run adonis
+#Run adonis- Ignore time for now.
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
 rownames(condI) <- rownames(dataNormt)
-adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
+adonis(dist.Metab ~ Condition, data=condI,permutations=999)
+#Strain-specific exometabolite composition differs (even without taking into account time)
 
 #Perform pairwise adonis post-hoc
 library("RVAideMemoire")
@@ -736,21 +746,25 @@ library(ggplot2)
 #Change time from factor to numeric
 centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
 
+library(viridis)
+
 PCA_NonPolarPos <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
-  geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  #coord_fixed()+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
+  geom_point(aes(shape= factor(Label),color=factor(Time)),size=5)+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
-  scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(2,3.5,5,7,9,12))+
-  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
+  scale_color_gradientn(colours = viridis(6)) +
+  scale_color_viridis(discrete=TRUE) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 5)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 5)) +
-  theme(legend.position="none",axis.title = element_text(size = 20),axis.text = element_text(size = 18),legend.title=element_text(size=20))
+  theme_bw()+
+  theme(legend.position="none",axis.title = element_text(size = 24),axis.text = element_text(size = 20),
+    legend.title=element_text(size=22))
+
+PCA_NonPolarPosFinal <- PCA_NonPolarPos +
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1),size=0.1,colour="black")
 
 #Run variation partitioning.
 NPPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -758,10 +772,11 @@ NPPvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #####Varpart when non-released replaced by 0s
 #Species: 0.91854 #Time: -0.05818 #Species x Time:0.94454
 
-#Run adonis
+#Run adonis- Ignore time for now.
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
 rownames(condI) <- rownames(dataNormt)
-adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
+adonis(dist.Metab ~ Condition, data=condI,permutations=999)
+#Strain-specific exometabolite composition differs (even without taking into account time)
 
 #Perform pairwise adonis post-hoc
 library("RVAideMemoire")
@@ -1054,21 +1069,26 @@ library(ggplot2)
 #Change time from factor to numeric
 centroids$Time <- rep(c(12.5,25,30,35,40,45),3)
 
+library(viridis)
+
 PCA_NonPolarNeg <- ggplot(centroids, aes(x=PCoA1, y=PCoA2))+
-  geom_point(aes(fill= factor(Label),size=factor(Time)), colour="black",shape=21)+
-  #coord_fixed()+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1,color=Label))+
-  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1,color=Label))+
+  geom_point(aes(shape= factor(Label),color=factor(Time)),size=5)+
   xlab(label = paste("PC1"," (", round(PC1var,digits = 3)*100, "% var. explained)", sep = ""))+
   ylab(label = paste("PC2"," (", round(PC2var,digits = 3)*100, "% var. explained)", sep = ""))+
-  scale_fill_manual(values=c("#56B4E9", "#9900CC","#33CC00")) +
-  scale_size_manual(values = c(2,3.5,5,7,9,12))+
-  scale_color_manual(values=c("#56B4E9", "#9900CC","#33CC00"))+
+  scale_color_gradientn(colours = viridis(6)) +
+  scale_color_viridis(discrete=TRUE) +
   scale_x_continuous(breaks = pretty(centroids$PCoA1, n = 5)) +
   scale_y_continuous(breaks = pretty(centroids$PCoA2, n = 5)) +
-  theme(legend.position="none",axis.title = element_text(size = 22),axis.text = element_text(size = 18),legend.title=element_text(size=20))
+  theme_bw()+
+  theme(legend.position="none",axis.title = element_text(size = 24),axis.text = element_text(size = 20),
+    legend.title=element_text(size=22))
+
+PCA_NonPolarNegFinal <- PCA_NonPolarNeg +
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1+sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1-sd_axis1,y=PCoA2,yend=PCoA2),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2+sd_axis1),size=0.1,colour="black")+
+  geom_segment(data=centroids, aes(x=PCoA1,xend=PCoA1,y=PCoA2,yend=PCoA2-sd_axis1),size=0.1,colour="black")
+
 
 #Run variation partitioning.
 NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
@@ -1076,10 +1096,11 @@ NPNvarPart <- varpart(dist.Metab,~Species,~Time,data=metaDvP)
 #####Varpart when non-released replaced by 0s
 #Species: 0.91629 #Time: -0.06694 #Species x Time:0.94001
 
-#Run adonis
+#Run adonis- Ignore time for now.
 condI <- data.frame("Condition"=mDataSplit$X2, "Time"=mDataSplitTime$X1)
 rownames(condI) <- rownames(dataNormt)
-adonis(dist.Metab ~ Condition*Time, data=condI,permutations=999)
+adonis(dist.Metab ~ Condition, data=condI,permutations=999)
+#Strain-specific exometabolite composition differs (even without taking into account time)
 
 #Perform pairwise adonis post-hoc
 library("RVAideMemoire")
@@ -1285,9 +1306,11 @@ Ps.dist.45to40 <- dist_between_centroids(dist.Metab.Ps,c("X1mem_Ps_40hr.2","X1me
 
 library(patchwork)
 
-PCA_plots <- PCA_PolarPos + PCA_PolarNeg +
+PCA_plots <- PCA_PolarPosFinal + PCA_PolarNegFinal +
   theme(legend.position="right",legend.text = element_text(size = 20)) + guides(color=guide_legend(title = "Strain",order=1),fill=FALSE,size=guide_legend(title = "Time(h)",order=3)) +
-  PCA_NonPolarPos + PCA_NonPolarNeg + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
+  PCA_NonPolarPosFinal + PCA_NonPolarNegFinal + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
+PCA_plots <- PCA_PolarPosFinal + PCA_PolarNegFinal +
+ PCA_NonPolarPosFinal + PCA_NonPolarNegFinal + plot_layout(ncol=2,nrow=2) + plot_annotation(tag_levels = 'A')
 
-ggsave("Figures/Fig1/PCA_Plots.eps",plot=PCA_plots,device="eps",width=15,height=10,dpi=600)
+ggsave("/mnt/scratch/chodkows/PCA_Plots.eps",plot=PCA_plots,device="eps",width=12,height=12, units = "in", dpi=300)
