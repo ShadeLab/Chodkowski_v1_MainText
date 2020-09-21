@@ -237,6 +237,73 @@ mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
 
+#Extract scores
+modScores.Bt <- scores(mod.Bt)
+modScores.Cv <- scores(mod.Cv)
+modScores.Ps <- scores(mod.Ps)
+
+modScores.Bt.PCs <- as.data.frame(modScores.Bt$sites)
+modScores.Cv.PCs <- as.data.frame(modScores.Cv$sites)
+modScores.Ps.PCs <- as.data.frame(modScores.Ps$sites)
+
+#Extract PC1&2 for bio reps
+modScores.Bt.PCs.F <- cbind(modScores.Bt.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Bt",3:4])
+modScores.Cv.PCs.F <- cbind(modScores.Cv.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Cv",3:4])
+modScores.Ps.PCs.F <- cbind(modScores.Ps.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Ps",3:4])
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "1")
+BtR2 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "2")
+BtR3 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "3")
+BtR4 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "1")
+CvR2 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "2")
+CvR3 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "3")
+CvR4 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "1")
+PsR2 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "2")
+PsR3 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "3")
+PsR4 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "4")
+
+#Perform protest for Bt
+protest(X=BtR1[,1:2],Y=BtR2[,1:2])
+protest(X=BtR1[,1:2],Y=BtR3[,1:2])
+protest(X=BtR1[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR2[,1:2],Y=BtR3[,1:2])
+protest(X=BtR2[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,1:2],Y=CvR2[,1:2])
+protest(X=CvR1[,1:2],Y=CvR3[,1:2])
+protest(X=CvR1[,1:2],Y=CvR4[,1:2])
+protest(X=CvR2[,1:2],Y=CvR3[,1:2])
+protest(X=CvR2[,1:2],Y=CvR4[,1:2])
+protest(X=CvR3[,1:2],Y=CvR4[,1:2])
+
+#Perform protest for Ps
+protest(X=PsR1[,1:2],Y=PsR2[,1:2])
+protest(X=PsR1[,1:2],Y=PsR3[,1:2])
+protest(X=PsR1[,1:2],Y=PsR4[,1:2])
+protest(X=PsR2[,1:2],Y=PsR3[,1:2])
+protest(X=PsR2[,1:2],Y=PsR4[,1:2])
+protest(X=PsR3[,1:2],Y=PsR4[,1:2])
+
+
+#Create metaData dfs
+#metaD.Bt.df <- as.data.frame(metaD.Bt)
+#metaD.Cv.df <- as.data.frame(metaD.Cv)
+#metaD.Ps.df <- as.data.frame(metaD.Ps)
+
+#Run capscale to obtain exometabolite scores
+#RDA.Bt = rda(dist.Metab.Bt ~ metaD.Bt,comm=dataNormt.Bt,metaD.Bt.df)
+#dbRDA.Cv = capscale(dist.Metab.Cv ~ metaD.Cv,comm=dataNormt.Cv,metaD.Cv.df)
+3dbRDA.Ps = capscale(dist.Metab.Ps ~ metaD.Ps,comm=dataNormt.Ps,metaD.Ps.df)
+
 #Prep for repeated measures anova
 metaD.Bt.df <- data.frame(Time=metaD.Bt)
 metaD.Cv.df <- data.frame(Time=metaD.Cv)
@@ -565,6 +632,62 @@ mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
 
+#Extract scores
+modScores.Bt <- scores(mod.Bt)
+modScores.Cv <- scores(mod.Cv)
+modScores.Ps <- scores(mod.Ps)
+
+modScores.Bt.PCs <- as.data.frame(modScores.Bt$sites)
+modScores.Cv.PCs <- as.data.frame(modScores.Cv$sites)
+modScores.Ps.PCs <- as.data.frame(modScores.Ps$sites)
+
+#Extract PC1&2 for bio reps
+modScores.Bt.PCs.F <- cbind(modScores.Bt.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Bt",3:4])
+modScores.Cv.PCs.F <- cbind(modScores.Cv.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Cv",3:4])
+modScores.Ps.PCs.F <- cbind(modScores.Ps.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Ps",3:4])
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "1")
+BtR2 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "2")
+BtR3 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "3")
+BtR4 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "1")
+CvR2 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "2")
+CvR3 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "3")
+CvR4 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "1")
+PsR2 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "2")
+PsR3 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "3")
+PsR4 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "4")
+
+#Perform protest for Bt
+protest(X=BtR1[,1:2],Y=BtR2[,1:2])
+protest(X=BtR1[,1:2],Y=BtR3[,1:2])
+protest(X=BtR1[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR2[,1:2],Y=BtR3[,1:2])
+protest(X=BtR2[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,1:2],Y=CvR2[,1:2])
+protest(X=CvR1[,1:2],Y=CvR3[,1:2])
+protest(X=CvR1[,1:2],Y=CvR4[,1:2])
+protest(X=CvR2[,1:2],Y=CvR3[,1:2])
+protest(X=CvR2[,1:2],Y=CvR4[,1:2])
+protest(X=CvR3[,1:2],Y=CvR4[,1:2])
+
+#Perform protest for Ps
+protest(X=PsR1[,1:2],Y=PsR2[,1:2])
+protest(X=PsR1[,1:2],Y=PsR3[,1:2])
+protest(X=PsR1[,1:2],Y=PsR4[,1:2])
+protest(X=PsR2[,1:2],Y=PsR3[,1:2])
+protest(X=PsR2[,1:2],Y=PsR4[,1:2])
+protest(X=PsR3[,1:2],Y=PsR4[,1:2])
+
 #Prep for repeated measures anova
 metaD.Bt.df <- data.frame(Time=metaD.Bt)
 metaD.Cv.df <- data.frame(Time=metaD.Cv)
@@ -888,6 +1011,56 @@ mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
 
+#Extract scores
+modScores.Bt <- scores(mod.Bt)
+modScores.Cv <- scores(mod.Cv)
+modScores.Ps <- scores(mod.Ps)
+
+modScores.Bt.PCs <- as.data.frame(modScores.Bt$sites)
+modScores.Cv.PCs <- as.data.frame(modScores.Cv$sites)
+modScores.Ps.PCs <- as.data.frame(modScores.Ps$sites)
+
+#Extract PC1&2 for bio reps
+modScores.Bt.PCs.F <- cbind(modScores.Bt.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Bt",3:4])
+modScores.Cv.PCs.F <- cbind(modScores.Cv.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Cv",3:4])
+modScores.Ps.PCs.F <- cbind(modScores.Ps.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Ps",3:4])
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "1")
+BtR2 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "2")
+BtR3 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "3")
+BtR4 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "1")
+CvR2 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "2")
+CvR3 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "3")
+CvR4 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "1")
+PsR2 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "2")
+PsR3 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "3")
+PsR4 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "4")
+
+#Perform protest for Bt- not enough data for R1
+protest(X=BtR2[,1:2],Y=BtR3[,1:2])
+protest(X=BtR2[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+
+#Perform protest for Cv
+protest(X=CvR1[,1:2],Y=CvR2[2:6,1:2]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR1[,1:2],Y=CvR3[2:6,1:2]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR1[,1:2],Y=CvR4[2:6,1:2]) #Remove first time point- missing data for Cv12.5h_BioRep1
+protest(X=CvR2[,1:2],Y=CvR3[,1:2])
+protest(X=CvR2[,1:2],Y=CvR4[,1:2])
+protest(X=CvR3[,1:2],Y=CvR4[,1:2])
+
+#Perform protest for Ps - no data for R1
+protest(X=PsR2[,1:2],Y=PsR3[,1:2])
+protest(X=PsR2[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
+protest(X=PsR3[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
+
 #Prep for repeated measures anova
 metaD.Bt.df <- data.frame(Time=metaD.Bt)
 metaD.Cv.df <- data.frame(Time=metaD.Cv)
@@ -1208,6 +1381,53 @@ metaD.Ps <- metaD[38:54,]
 mod.Bt <- betadisper(dist.Metab.Bt, metaD.Bt)
 mod.Cv <- betadisper(dist.Metab.Cv, metaD.Cv)
 mod.Ps <- betadisper(dist.Metab.Ps, metaD.Ps)
+
+#Extract scores
+modScores.Bt <- scores(mod.Bt)
+modScores.Cv <- scores(mod.Cv)
+modScores.Ps <- scores(mod.Ps)
+
+modScores.Bt.PCs <- as.data.frame(modScores.Bt$sites)
+modScores.Cv.PCs <- as.data.frame(modScores.Cv$sites)
+modScores.Ps.PCs <- as.data.frame(modScores.Ps$sites)
+
+#Extract PC1&2 for bio reps
+modScores.Bt.PCs.F <- cbind(modScores.Bt.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Bt",3:4])
+modScores.Cv.PCs.F <- cbind(modScores.Cv.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Cv",3:4])
+modScores.Ps.PCs.F <- cbind(modScores.Ps.PCs,mod_sample.PCs[mod_sample.PCs$Strain=="Ps",3:4])
+
+#Extract B. thailandensis PCA PC1 & PC2 scores
+BtR1 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "1")
+BtR2 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "2")
+BtR3 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "3")
+BtR4 <- filter(modScores.Bt.PCs.F, Strain == "Bt" & BR == "4")
+
+#Extract C. violaceum PCA PC1 & PC2 scores
+CvR1 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "1")
+CvR2 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "2")
+CvR3 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "3")
+CvR4 <- filter(modScores.Cv.PCs.F, Strain == "Cv" & BR == "4")
+
+#Extract P. syringae PCA PC1 & PC2 scores
+PsR1 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "1")
+PsR2 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "2")
+PsR3 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "3")
+PsR4 <- filter(modScores.Ps.PCs.F, Strain == "Ps" & BR == "4")
+
+#Perform protest for Bt- not enough data for R1
+protest(X=BtR2[,1:2],Y=BtR3[,1:2]) #Check if pseudo sample was added
+protest(X=BtR2[1:5,1:2],Y=BtR4[,1:2]) #Remove last time point- missing data for Bt45h_BioRep4
+protest(X=BtR3[1:5,1:2],Y=BtR4[,1:2])
+
+#Perform protest for Cv- not enough data for R1
+protest(X=CvR2[,1:2],Y=CvR3[,1:2])
+protest(X=CvR2[,1:2],Y=CvR4[,1:2])
+protest(X=CvR3[,1:2],Y=CvR4[,1:2])
+
+#Perform protest for Ps - no data for R1
+protest(X=PsR2[,1:2],Y=PsR3[,1:2])
+protest(X=PsR2[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
+protest(X=PsR3[2:6,1:2],Y=PsR4[,1:2]) #Remove first time point- missing data for Ps12.5h_BioRep4
 
 #Prep for repeated measures anova
 metaD.Bt.df <- data.frame(Time=metaD.Bt)
