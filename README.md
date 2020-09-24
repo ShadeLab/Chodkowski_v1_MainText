@@ -24,4 +24,4 @@ This material is based upon work supported by the National Science Foundation un
 
 ![imageOfworkflow](https://github.com/ShadeLab/Isolate_ExoMetabolitesDynamicsIn_SP/blob/master/images/MSworkflow.png)
 
-
+![imageOfworkflow](https://github.com/ShadeLab/Paper_Chodkowski_MonocultureExometabolites_2020/blob/master/images/MSworkflow.png)
