@@ -8,4 +8,4 @@ These LFC changes were then mapped onto KEGG pathways using the pathview package
 
 To view KEGG pathways of interest, navigate back to the KeggPathway directory and then into the strain directories to view the .png files. 
 
-## Note, the default color scheme from pathview (Red: Increased expression, Green: Decreased expression) is opposite that for Figure 7 in the manuscript (Green: Increased expression, Red: Decreased expression)
+### Note, the default color scheme from pathview (Red: Increased expression, Green: Decreased expression) is opposite that for Figure 7 in the manuscript (Green: Increased expression, Red: Decreased expression)
