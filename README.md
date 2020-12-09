@@ -7,7 +7,7 @@
 *This work is published*
 
 ## To cite this work or code
-Chodkowski JL and A Shade.  2020.  Exometabolite dynamics over stationary phase reveal strain-specific responses.  Submitted.  Preprint:  https://www.biorxiv.org/content/10.1101/2020.06.05.137489v1
+Chodkowski JL, Shade A. 2020. Exometabolite dynamics over stationary phase reveal strain-specific responses. mSystems 5:e00493-20. https://doi.org/10.1128/mSystems.00493-20.
 
 ## Data
 Genomics, metabolomics, and transcriptomics data are available at Joint Genomes Institute Portal (https://genome.jgi.doe.gov/portal/) under JGI Proposal ID 502921
